@@ -30,16 +30,7 @@ find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-        "msg/HighCmd.msg"
-        "msg/Cartesian.msg"
-        "msg/HighState.msg"
-        "msg/IMU.msg"
-        "msg/LED.msg"
-        "msg/LowCmd.msg"
-        "msg/LowState.msg"
-        "msg/MotorCmd.msg"
-        "msg/MotorState.msg"
-        "msg/Walk.msg"
+        "msg/CmdMode.msg"
         DEPENDENCIES builtin_interfaces
 )
 
