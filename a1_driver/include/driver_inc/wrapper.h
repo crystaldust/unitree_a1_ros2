@@ -10,6 +10,8 @@ public:
     unitreeWrapper(){
 
     }
+    void UDPRecv();
+    void UDPSend();
 private:
     void robotToLocalTime();
     void walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed, float time);
