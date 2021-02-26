@@ -4,13 +4,13 @@
 
 #include "unitree_driver/unitree_wrapper.h"
 
-void unitreeWrapper::walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed){
+void unitreeWrapper::walkCmd(double forwardSpeed, double sideSpeed, double rotateSpeed){
 
     UNITREE_LEGGED_SDK::HighState current_state;
     UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
 
     udp_wrapper.udp.GetRecv(current_state);
-    if (current_state.mode == 1){
+    if (true || current_state.mode == 1){
         std::cout << "received : 1 //" << current_state.mode << std::endl;
     }
 
