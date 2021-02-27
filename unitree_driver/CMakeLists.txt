@@ -10,45 +10,38 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+#-----------------------delete------------------------------
+set(FastRTPS_INCLUDE_DIR /opt/ros/foxy/include)
+set(FastRTPS_LIBRARY_RELEASE /opt/ros/foxy/lib/libfastrtps.so)
+#-----------------------delete------------------------------
+
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
-find_package(tf2 REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(Eigen3 REQUIRED)
 
 set(dependencies
-        rclcpp
-        tf2
-        geometry_msgs
-        )
+		rclcpp
+		geometry_msgs
+		)
 
 include_directories(
-        include
-        ${Boost_INCLUDE_DIR}
-        $ENV{UNITREE_LEGGED_SDK_PATH}/include
+		include
+		$ENV{UNITREE_LEGGED_SDK_PATH}/include
 )
 
 link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
 string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
 set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
-add_executable(unitree_ros src/unitree_ros.cpp)
+add_executable(unitree_ros src/unitree_ros.cpp
+							src/unitree_wrapper.cpp
+							include/unitree_driver/unitree_wrapper.h)
 ament_target_dependencies(unitree_ros
-        ${dependencies}
-        )
+		${dependencies}
+		)
 target_link_libraries(unitree_ros
-        ${EXTRA_LIBS}
-        )
-
-add_library(unitree_wrapper SHARED
-			src/unitree_wrapper.cpp 
-			include/unitree_driver/unitree_wrapper.h)
-ament_target_dependencies(unitree_wrapper
-        ${dependencies}
-        )
-target_link_libraries(unitree_wrapper
-        ${EXTRA_LIBS}
-        )
+		${EXTRA_LIBS}
+		)
 
 add_executable(msg_pub src/msg_pub.cpp)
 ament_target_dependencies(msg_pub
