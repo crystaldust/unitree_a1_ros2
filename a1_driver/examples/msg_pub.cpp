@@ -9,16 +9,15 @@
 
 using namespace std::chrono_literals;
 
-class PubNode: public rclcpp::Node
-{
+class PubNode : public rclcpp::Node {
 public:
-    PubNode():Node("pub_node"), count_(0){
+    PubNode() : Node("pub_node"), count_(0) {
         walk_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
         timer_ = this->create_wall_timer(500ms, std::bind(&PubNode::pub_callback, this));
     }
 
 private:
-    void pub_callback(){
+    void pub_callback() {
         geometry_msgs::msg::Twist msg;
         msg.linear.x = 0.1;
         msg.linear.y = 0.0;
@@ -26,13 +25,13 @@ private:
         RCLCPP_INFO(this->get_logger(), "sending");
         walk_pub->publish(msg);
     }
+
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr walk_pub;
     size_t count_;
 };
 
-int main(int argc, char * argv[])
-{
+int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
     auto node = std::make_shared<PubNode>();
     rclcpp::spin(node);

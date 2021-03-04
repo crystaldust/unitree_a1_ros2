@@ -10,21 +10,28 @@
 #include "geometry_msgs/msg/twist.hpp"
 #include "unitree_legged_sdk/unitree_legged_sdk.h"
 
-class A1Wrapper{
+class A1Wrapper {
 public:
-    A1Wrapper():udp(UNITREE_LEGGED_SDK::HIGHLEVEL), safety(UNITREE_LEGGED_SDK::LeggedType::A1), cmd({0}){
+    A1Wrapper() : udp(UNITREE_LEGGED_SDK::HIGHLEVEL), safety(UNITREE_LEGGED_SDK::LeggedType::A1), cmd({0}) {
         udp.InitCmdData(cmd);
     }
-    void UDPRecv(){
+
+    void UDPRecv() {
         udp.Recv();
     }
-    void UDPSend(){
+
+    void UDPSend() {
         udp.Send();
     }
+
     void walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed);
+
     void stop();
+
     void setVel(float forward_speed);
+
     void setWalkMode();
+
     UNITREE_LEGGED_SDK::UDP udp;
     UNITREE_LEGGED_SDK::Safety safety;
     UNITREE_LEGGED_SDK::HighCmd cmd;

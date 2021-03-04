@@ -10,14 +10,14 @@
 #include "rclcpp/rclcpp.hpp"
 #include "unitree_a1_ros2/A1_wrapper.h"
 
-class A1ROS
-{
+class A1ROS {
 public:
-    A1ROS(std::string node_name):wrapper(A1Wrapper()){
+    A1ROS(std::string node_name) : wrapper(A1Wrapper()) {
         this->node_name = node_name;
     };
 
-    int node_init(int argc, char * argv[]);
+    int node_init(int argc, char *argv[]);
+
     A1Wrapper wrapper;
 
 private:
