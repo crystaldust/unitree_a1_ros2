@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 class PubNode : public rclcpp::Node {
 public:
     PubNode() : Node("pub_node"), count_(0) {
-        walk_pub = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+        walk_pub = this->create_publisher<geometry_msgs::msg::Twist>("unitree_a1/cmd_vel", 10);
         timer_ = this->create_wall_timer(500ms, std::bind(&PubNode::pub_callback, this));
     }
 

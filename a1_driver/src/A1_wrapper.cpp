@@ -2,6 +2,7 @@
 // Created by sun on 2021/3/1.
 //
 
+#include <time.h>
 #include "unitree_a1_ros2/A1_wrapper.h"
 
 void A1Wrapper::walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed) {
@@ -10,7 +11,8 @@ void A1Wrapper::walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed) 
     UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
 
     udp.GetRecv(current_state);
-    std::cout << unsigned(current_state.mode) << std::endl;
+//    unitree a1 cannot send correct state information now, this function is unfinished. (From Unitree Development Team)
+//    std::cout << unsigned(current_state.mode) << std::endl;
 
 //    step 1 : UDP mode = 1
     high_cmd.mode = 1;

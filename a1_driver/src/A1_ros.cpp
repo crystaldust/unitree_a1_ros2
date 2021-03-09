@@ -5,12 +5,14 @@
 #include "unitree_a1_ros2/A1_ros.h"
 
 int A1ROS::node_init(int argc, char *argv[]) {
+    rclcpp::init(argc, argv);
     auto A1_node = rclcpp::Node::make_shared(this->node_name);
     auto A1_sub = A1_node->create_subscription<geometry_msgs::msg::Twist>(
-            "cmd_vel",
+            "unitree_a1/cmd_vel",
             10,
-            [this](geometry_msgs::msg::Twist::UniquePtr msg) {
-                std::cout << "received: speed = " << msg->linear.x << std::endl;
+            [this, A1_node](geometry_msgs::msg::Twist::UniquePtr msg) {
+                RCLCPP_INFO(A1_node->get_logger(),
+                            "received: speed = %f", msg->linear.x);
                 wrapper.walkCmd(msg->linear.x, msg->linear.y, msg->angular.z);
             }
     );

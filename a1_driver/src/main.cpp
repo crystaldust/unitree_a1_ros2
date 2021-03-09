@@ -6,7 +6,6 @@
 #include "unitree_a1_ros2/A1_wrapper.h"
 
 int main(int argc, char *argv[]) {
-    rclcpp::init(argc, argv);
     std::string node_name = "A1_node";
     if (argc < 3) {
         std::cerr << "running ros2 run unitree_a1_ros2 a1_main --node-name A1_node" << std::endl;
