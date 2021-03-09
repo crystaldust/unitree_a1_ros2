@@ -30,9 +30,9 @@ set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
 add_executable(a1_main src/main.cpp
         src/A1_ros.cpp
-        include/unitree_a1_ros2/A1_ros.h
+        include/a1_driver/A1_ros.h
         src/A1_wrapper.cpp
-        include/unitree_a1_ros2/A1_wrapper.h)
+        include/a1_driver/A1_wrapper.h)
 ament_target_dependencies(a1_main ${dependencies})
 target_link_libraries(a1_main ${EXTRA_LIBS})
 

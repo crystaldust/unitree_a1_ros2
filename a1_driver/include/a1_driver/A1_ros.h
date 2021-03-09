@@ -8,7 +8,7 @@
 #include <memory>
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "unitree_a1_ros2/A1_wrapper.h"
+#include "a1_driver/A1_wrapper.h"
 
 class A1ROS {
 public:
