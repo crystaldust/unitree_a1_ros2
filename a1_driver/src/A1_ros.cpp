@@ -16,14 +16,16 @@ int A1ROS::node_init(int argc, char *argv[]) {
                 wrapper.walkCmd(msg->linear.x, msg->linear.y, msg->angular.z);
             }
     );
+
     auto mode_sub =  A1_node->create_subscription<a1_msgs::msg::Mode>(
             "cmd_mode",
             10,
             [this](a1_msgs::msg::Mode::UniquePtr msg){
                 RCLCPP_INFO(rclcpp::get_logger("rcv_mode"), "set cmd mode: [%d] value[%0.2f]", msg->mode, msg->value);
-		  wrapper.setControlCmd(msg->mode, msg->value);
+		            wrapper.setControlCmd(msg->mode, msg->value);
             }
     );
+
 //    A1_node->create_subscription<...>();
     UNITREE_LEGGED_SDK::InitEnvironment();
     float dt = 0.002f;

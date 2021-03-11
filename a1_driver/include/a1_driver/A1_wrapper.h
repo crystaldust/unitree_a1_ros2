@@ -8,6 +8,7 @@
 #include <iostream>
 #include "geometry_msgs/msg/twist.hpp"
 #include "unitree_legged_sdk/unitree_legged_sdk.h"
+
 enum {
 	CMD_SET_MODE_STAND = 0,
 	CMD_SET_MODE_FORCE_STAND,
@@ -22,6 +23,7 @@ enum {
 	CMD_SET_ROLL_RIGHT,
 	CMD_SET_CLEAR_ALL
 };
+
 class A1Wrapper {
 public:
     A1Wrapper() : udp(UNITREE_LEGGED_SDK::HIGHLEVEL), safety(UNITREE_LEGGED_SDK::LeggedType::A1), cmd({0}) {
@@ -43,8 +45,10 @@ public:
     void setVel(float forward_speed);
 
     void setWalkMode();
+
     void setControlCmd(uint8_t mode, float value);
     void getHighState();
+
     UNITREE_LEGGED_SDK::UDP udp;
     UNITREE_LEGGED_SDK::Safety safety;
     UNITREE_LEGGED_SDK::HighCmd cmd;
