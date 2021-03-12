@@ -37,7 +37,7 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 set(msg_files
-    "msg/CmdMode.msg"
+    "msg/Mode.msg"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
     ${msg_files}
