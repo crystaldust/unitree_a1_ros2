@@ -1,6 +1,7 @@
 # unitree_a1_ros2
 The UNOFFICIAL ROS2 driver for Unitree robotics dog A1
 
+Unitree A1 high layer control state support statistics:  
 <table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="643" style="width:17.0cm;margin-left:-.25pt;border-collapse:collapse;border:none;
  mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:
  0cm 5.4pt 0cm 5.4pt">
@@ -361,4 +362,8 @@ The UNOFFICIAL ROS2 driver for Unitree robotics dog A1
   <p class="MsoNormal" align="center" style="text-align:center"><span lang="EN-US" style="color:black;mso-color-alt:windowtext">Support</span><span lang="EN-US"><o:p></o:p></span></p>
   </td>
  </tr>
-</tbody></table>
+</tbody></table> 
+
+comment:  
+1.Setting sport mode is not supported through call unitree sdk.  
+2.In normal mode, the robot dog will drift when stepping, It's best to develop in sport mode.  
