@@ -85,7 +85,8 @@ Unitree A1 high level control state support statistics:
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
   <p class="MsoNormal" align="center" style="text-align:center"><span lang="EN-US">Not
-  <span class="GramE">support(</span>sport mode)<o:p></o:p></span></p>
+  <span class="GramE">support(</span>Getting temperature in sport mode is not
+  supported)<o:p></o:p></span></p>
   </td>
  </tr>
  <tr style="mso-yfti-irow:4">
@@ -369,3 +370,5 @@ Unitree A1 high level control state support statistics:
 ### Comment:  
 1.Setting sport mode is not supported through call unitree sdk.  
 2.In normal mode, the robot dog will drift when stepping, It's best to develop in sport mode.  
+3.Getting temperature in sport mode is not supported.  
+4.Getting the current mode of the robot dog is not supported.  
