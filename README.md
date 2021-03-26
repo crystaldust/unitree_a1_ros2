@@ -1,7 +1,8 @@
 # unitree_a1_ros2
 The UNOFFICIAL ROS2 driver for Unitree robotics dog A1
 
-Unitree A1 high layer control state support statistics:  
+## Unitree A1 high level control status
+Unitree A1 high level control state support statistics:  
 <table class="MsoTableGrid" border="1" cellspacing="0" cellpadding="0" width="643" style="width:17.0cm;margin-left:-.25pt;border-collapse:collapse;border:none;
  mso-border-alt:solid windowtext .5pt;mso-yfti-tbllook:1184;mso-padding-alt:
  0cm 5.4pt 0cm 5.4pt">
@@ -25,8 +26,8 @@ Unitree A1 high layer control state support statistics:
   </td>
  </tr>
  <tr style="mso-yfti-irow:1">
-  <td width="123" valign="top" style="width:92.15pt;border:solid windowtext 1.0pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  <td width="123" style="width:92.15pt;border:solid windowtext 1.0pt;border-top:
+  none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 5.4pt 0cm 5.4pt">
   <p class="MsoNormal" align="center" style="text-align:center"><span class="SpellE"><span lang="EN-US">levelFlag</span></span><span lang="EN-US"><o:p></o:p></span></p>
   </td>
@@ -34,10 +35,10 @@ Unitree A1 high layer control state support statistics:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
-  <p class="MsoNormal"><span lang="EN-US">High or level layer flag: “0x00<span class="GramE">”:high</span> layer “0xff”: low layer<o:p></o:p></span></p>
+  <p class="MsoNormal"><span lang="EN-US">High level or low level flag: “0x00<span class="GramE">”:high</span> level “0xff”: low level<o:p></o:p></span></p>
   </td>
-  <td width="170" valign="top" style="width:127.55pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  <td width="170" style="width:127.55pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt">
   <p class="MsoNormal" align="center" style="text-align:center;text-indent:5.25pt;
@@ -362,8 +363,9 @@ Unitree A1 high layer control state support statistics:
   <p class="MsoNormal" align="center" style="text-align:center"><span lang="EN-US" style="color:black;mso-color-alt:windowtext">Support</span><span lang="EN-US"><o:p></o:p></span></p>
   </td>
  </tr>
-</tbody></table> 
+</tbody>
+</table>
 
-comment:  
+### Comment:  
 1.Setting sport mode is not supported through call unitree sdk.  
 2.In normal mode, the robot dog will drift when stepping, It's best to develop in sport mode.  
