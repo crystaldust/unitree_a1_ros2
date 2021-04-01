@@ -4,7 +4,7 @@
   <name>a1_msgs</name>
   <version>0.0.1</version>
   <description>The custom msgs package for Unitree robotics dog A1</description>
-  <maintainer email="guoliguo@huawei.com">guo</maintainer>
+  <maintainer email="guoliguo@huawei.com">Liguo Guo</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

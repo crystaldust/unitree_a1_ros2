@@ -9,11 +9,11 @@ endif ()
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
-
+add_definitions(-DSPORT_MODE)
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
-
+find_package(a1_msgs REQUIRED)
 set(dependencies
         rclcpp
         geometry_msgs
@@ -32,19 +32,39 @@ add_executable(a1_main src/main.cpp
         src/A1_ros.cpp
         include/a1_driver/A1_ros.h
         src/A1_wrapper.cpp
-        include/a1_driver/A1_wrapper.h)
-ament_target_dependencies(a1_main ${dependencies})
+        include/a1_driver/A1_wrapper.h
+		include/comm/comm_ros.h)
+ament_target_dependencies(a1_main ${dependencies} a1_msgs)
 target_link_libraries(a1_main ${EXTRA_LIBS})
+#---------------------------------------------------------
+#pub velocity msg
+add_executable(pub_vel_msg examples/pub_vel_msg.cpp
+			   include/comm/comm_ros.h)
+ament_target_dependencies(msg_pub ${dependencies} a1_msgs)
+#client get imu info
+add_executable(client_get_imu examples/client_get_imu_msg.cpp
+			   include/comm/comm_ros.h)
+ament_target_dependencies(client_get_imu ${dependencies} a1_msgs)
 
-add_executable(msg_pub examples/msg_pub.cpp)
-ament_target_dependencies(msg_pub ${dependencies})
+#client get high state info
+add_executable(client_get_state examples/client_get_state.cpp
+			   include/comm/comm_ros.h)
+ament_target_dependencies(client_get_state ${dependencies} a1_msgs)
 
+#client set mode
+add_executable(client_set_mode examples/client_set_mode.cpp
+			   include/comm/comm_ros.h)
+ament_target_dependencies(client_set_mode ${dependencies} a1_msgs)
+#------------------------------------------------------------
 ament_export_include_directories(include)
 ament_export_dependencies(${dependencies})
 
 install(TARGETS
         a1_main
-        msg_pub
+        pub_vel_msg
+		client_get_imu
+		client_get_state
+		client_set_mode
         DESTINATION lib/${PROJECT_NAME}
         )
 

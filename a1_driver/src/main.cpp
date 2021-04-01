@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
             node_name = argv[i + 1];
         }
     }
-
+   
     A1ROS a1_ros = A1ROS(node_name);
     std::cout << "creating a node named :" << node_name << std::endl;
     a1_ros.node_init(argc, argv);
