@@ -5,24 +5,26 @@
 #include "comm/comm_ros.h"
 
 using namespace std::chrono_literals;
-
-class ClientNode : public rclcpp::Node {
+class ClientNode 
+{
 public:
-    ClientNode(uint8_t mode) : Node("SetMode"), count_(5) {
+    ClientNode(uint8_t mode) :count_(5) {
         set_mode = mode;
-        client = this->create_client<a1_msgs::srv::Mode>(ROS2_TOPIC_SET_MODE);
-        timer_c = this->create_wall_timer(500ms, std::bind(&ClientNode::client_set_mode, this));
+        node = rclcpp::Node::make_shared("server_client");
+        client = node->create_client<a1_msgs::srv::Mode>(ROS2_TOPIC_SET_MODE);
     }
-private:
     void client_set_mode();
+private:
     rclcpp::TimerBase::SharedPtr timer_c;
     rclcpp::Client<a1_msgs::srv::Mode>::SharedPtr client;
+    std::shared_ptr<rclcpp::Node> node;
     uint8_t set_mode;
     size_t count_;
 };
 
 void ClientNode::client_set_mode() {
     int times = 0;
+     
     auto request = std::make_shared<a1_msgs::srv::Mode::Request>();
     while (!client->wait_for_service(1s)) {
         times++;
@@ -56,9 +58,14 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     mode = atoi(argv[1]);
-    auto node = std::make_shared<ClientNode>(mode);
-    rclcpp::spin(node);
+    ClientNode client(mode);
+    rclcpp::WallRate loop_rate(10.0);
+    while (rclcpp::ok())
+    {
+        client.client_set_mode();
+        loop_rate.sleep();
+    }
+    
     rclcpp::shutdown();
     return 0;
 }
-

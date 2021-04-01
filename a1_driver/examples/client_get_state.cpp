@@ -6,21 +6,21 @@
 
 using namespace std::chrono_literals;
 
-class ClientNode : public rclcpp::Node {
+class ClientNode     {
 public:
-    ClientNode() : Node("HighState"), wait_count(5) {
-        client = this->create_client<a1_msgs::srv::HighState>(ROS2_TOPIC_GET_HIGH_STATE_MSG);
-        timer_c = this->create_wall_timer(500ms, std::bind(&ClientNode::client_node_get_high_state, this));
+    ClientNode() : count_(5) {
+        node = rclcpp::Node::make_shared("HighState");
+        client = node->create_client<a1_msgs::srv::HighState>(ROS2_TOPIC_GET_HIGH_STATE_MSG);
     }
-private:
     void client_node_get_high_state();
-    rclcpp::TimerBase::SharedPtr timer_c;
+private:
     rclcpp::Client<a1_msgs::srv::HighState>::SharedPtr client;
-    size_t wait_times;
+    std::shared_ptr<rclcpp::Node> node;
+    size_t count_;
 };
 
 void ClientNode::client_node_get_high_state() {
-    int times = 0;
+    size_t times = 0;
     auto request = std::make_shared<a1_msgs::srv::HighState::Request>();
     while (!client->wait_for_service(1s)) {
         times++;
@@ -42,7 +42,7 @@ void ClientNode::client_node_get_high_state() {
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "mode: %12u         bandWidth: %12u", HighState->mode, HighState->bandwidth);
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT VELOCITY INFO#######################");
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "forwardSpeed: %12f   sideSpeed: %12f", HighState->forwardspeed, HighState->sidespeed);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "rotateSpeed: %12f    bodyHeight: %12f", HighState->rotateSpeed, HighState->bodyheight);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "rotateSpeed: %12f    bodyHeight: %12f", HighState->rotatespeed, HighState->bodyheight);
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "updownSpeed: %12f    forwardPosition: %12f", HighState->updownspeed, HighState->forwardposition);
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "sidePosition: %12f", HighState->sideposition);
         
@@ -82,8 +82,13 @@ void ClientNode::client_node_get_high_state() {
 
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<ClientNode>();
-    rclcpp::spin(node);
+    ClientNode client;
+    rclcpp::WallRate loop_rate(10.0);
+    while (rclcpp::ok())
+    {
+        client.client_node_get_high_state();
+        loop_rate.sleep();
+    }
     rclcpp::shutdown();
     return 0;
 }

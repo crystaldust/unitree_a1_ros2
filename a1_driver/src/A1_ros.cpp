@@ -4,8 +4,8 @@
 
 #include "a1_driver/A1_ros.h"
 
-void A1ROS::get_high_state_msg(const std::shared_ptr<a1_msgs::srv::High_State::Request> request,
-                   std::shared_ptr<a1_msgs::srv::High_State::Response> response) {
+void A1ROS::get_high_state_msg(const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
+                   std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
     int i;
     wrapper.recv_high_state();
     response->levelflag = wrapper.state.levelFlag;
@@ -86,7 +86,7 @@ int A1ROS::node_init(int argc, char *argv[]) {
             [this](geometry_msgs::msg::Twist::UniquePtr msg) {
                 RCLCPP_INFO(rclcpp::get_logger("rcv_vel"),
                             "forwardSpeed[%0.2f],sideSpeed[%0.2f],rotateSpeed[%0.2f]", msg->linear.x,msg->linear.y,msg->angular.z);
-                wrapper.walkCmd(msg->linear.x, msg->linear.y, msg->angular.z);
+                wrapper.velocity_set_cmd(msg->linear.x, msg->linear.y, msg->angular.z);
             }
     );
     auto mode_service = A1_node->create_service<a1_msgs::srv::Mode>(
@@ -96,10 +96,10 @@ int A1ROS::node_init(int argc, char *argv[]) {
                 set_mode(request, response);
             }
     );
-    auto hgih_state_service = A1_node->create_service<a1_msgs::srv::High_State>(
+    auto hgih_state_service = A1_node->create_service<a1_msgs::srv::HighState>(
             ROS2_TOPIC_GET_HIGH_STATE_MSG,
-            [this](const std::shared_ptr<a1_msgs::srv::High_State::Request> request,
-                   std::shared_ptr<a1_msgs::srv::High_State::Response> response) {
+            [this](const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
+                   std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
                 get_high_state_msg(request, response);
             }
     );
@@ -113,8 +113,8 @@ int A1ROS::node_init(int argc, char *argv[]) {
     );
     UNITREE_LEGGED_SDK::InitEnvironment();
     float dt = 0.002f;
-    UNITREE_LEGGED_SDK::LoopFunc loop_udpRecv("udp_recv", dt, 3, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
-    UNITREE_LEGGED_SDK::LoopFunc loop_udpSend("udp_send", dt, 3, boost::bind(&A1Wrapper::UDPSend, &wrapper));
+    UNITREE_LEGGED_SDK::LoopFunc loop_udpRecv("udp_recv", dt, 1, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
+    UNITREE_LEGGED_SDK::LoopFunc loop_udpSend("udp_send", dt, 1, boost::bind(&A1Wrapper::UDPSend, &wrapper));
     loop_udpRecv.start();
     loop_udpSend.start();
     rclcpp::spin(A1_node);

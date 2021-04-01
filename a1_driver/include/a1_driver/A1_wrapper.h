@@ -28,9 +28,9 @@ public:
     void UDPSend() {
         udp.Send();
     }
-    void mode_cmd(uint8_t mode);
     void velocity_set_cmd(float forwardSpeed, float sideSpeed, float rotateSpeed);
     void pose_set_cmd(uint8_t cmd_code, float value);
+    void mode_set_cmd(uint8_t mode);
     void recv_high_state();
     UNITREE_LEGGED_SDK::UDP udp;
     UNITREE_LEGGED_SDK::Safety safety;

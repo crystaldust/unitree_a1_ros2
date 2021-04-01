@@ -20,7 +20,7 @@ void A1Wrapper::velocity_set_cmd(float forwardSpeed, float sideSpeed, float rota
         high_cmd.rotateSpeed = rotateSpeed;
     }
     udp.SetSend(high_cmd);
-    std::cout << "set speed succcess. mode = " << int(mode) <<std::endl;
+    std::cout << "set speed succcess."  <<std::endl;
 }
 
 void A1Wrapper::mode_set_cmd(uint8_t mode) {

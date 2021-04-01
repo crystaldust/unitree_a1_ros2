@@ -17,12 +17,12 @@ public:
     };
 
     int node_init(int argc, char *argv[]);
-    void set_mode(const std::shared_ptr<a1_msgs::srv::High_State::Request> request,
-                    std::shared_ptr<a1_msgs::srv::High_State::Response> response);
-    void get_high_state_msg(const std::shared_ptr<a1_msgs::srv::High_State::Request> request,
-                    std::shared_ptr<a1_msgs::srv::High_State::Response> response);
-    void get_imu_msg(const std::shared_ptr<a1_msgs::srv::State::Request> request,
-                    std::shared_ptr<a1_msgs::srv::State::Response> response);
+    void set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
+                    std::shared_ptr<a1_msgs::srv::Mode::Response> response);
+    void get_high_state_msg(const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
+                    std::shared_ptr<a1_msgs::srv::HighState::Response> response);
+    void get_imu_msg(const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
+                    std::shared_ptr<a1_msgs::srv::Imu::Response> response);
     A1Wrapper wrapper;
 private:
     std::string node_name;

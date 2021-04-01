@@ -40,7 +40,7 @@ target_link_libraries(a1_main ${EXTRA_LIBS})
 #pub velocity msg
 add_executable(pub_vel_msg examples/pub_vel_msg.cpp
 			   include/comm/comm_ros.h)
-ament_target_dependencies(msg_pub ${dependencies} a1_msgs)
+ament_target_dependencies(pub_vel_msg ${dependencies} a1_msgs)
 #client get imu info
 add_executable(client_get_imu examples/client_get_imu_msg.cpp
 			   include/comm/comm_ros.h)

@@ -6,21 +6,21 @@
 
 using namespace std::chrono_literals;
 
-class ClientNode : public rclcpp::Node {
+class ClientNode  {
 public:
-    ClientNode() : Node("GetImuMsg"), wait_count(5) {
-        client = this->create_client<a1_msgs::srv::Imu>(ROS2_TOPIC_GET_IMU_MSG);
-        timer_c = this->create_wall_timer(500ms, std::bind(&ClientNode::client_node_get_imu_msg, this));
+    ClientNode() :     count_(5) {
+        node = rclcpp::Node::make_shared("GetImuMsg");
+        client = node->create_client<a1_msgs::srv::Imu>(ROS2_TOPIC_GET_IMU_MSG);
     }
-private:
     void client_node_get_imu_msg();
-    rclcpp::TimerBase::SharedPtr timer_c;
+private:
     rclcpp::Client<a1_msgs::srv::Imu>::SharedPtr client;
-    size_t wait_times;
+    std::shared_ptr<rclcpp::Node> node;
+    size_t count_;
 };
 
 void ClientNode::client_node_get_imu_msg() {
-    int times = 0;
+    size_t times = 0;
     auto request = std::make_shared<a1_msgs::srv::Imu::Request>();
     while (!client->wait_for_service(1s)) {
         times++;
@@ -34,7 +34,7 @@ void ClientNode::client_node_get_imu_msg() {
     if (rclcpp::spin_until_future_complete(node, result) ==
         rclcpp::executor::FutureReturnCode::SUCCESS)
     {
-        auto imu = result.get();
+        auto HighState = result.get();
         int i;
         
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT IMU INFO#######################");
@@ -60,8 +60,13 @@ void ClientNode::client_node_get_imu_msg() {
 
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<ClientNode>();
-    rclcpp::spin(node);
+    ClientNode client;
+    rclcpp::WallRate loop_rate(10.0);
+    while (rclcpp::ok())
+    {
+        client.client_node_get_imu_msg();
+        loop_rate.sleep();
+    }
     rclcpp::shutdown();
     return 0;
 }
