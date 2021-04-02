@@ -2,7 +2,7 @@
 #include <chrono>
 #include <unistd.h>
 #include "rclcpp/rclcpp.hpp"
-#include "comm/comm_ros.h"
+#include "a1_comm/A1_comm.h"
 
 using namespace std::chrono_literals;
 class ClientNode 
@@ -23,7 +23,7 @@ private:
 };
 
 void ClientNode::client_set_mode() {
-    int times = 0;
+    size_t times = 0;
      
     auto request = std::make_shared<a1_msgs::srv::Mode::Request>();
     while (!client->wait_for_service(1s)) {

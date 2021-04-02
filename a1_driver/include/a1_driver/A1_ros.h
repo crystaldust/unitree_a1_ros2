@@ -8,7 +8,7 @@
 #include <memory>
 #include "rclcpp/rclcpp.hpp"
 #include "a1_driver/A1_wrapper.h"
-#include "comm/comm_ros.h"
+#include "a1_comm/A1_comm.h"
 
 class A1ROS{
 public:

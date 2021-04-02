@@ -39,9 +39,11 @@ find_package(sensor_msgs REQUIRED)
 set(msg_files
 	"msg/IMU.msg"
 	"msg/Cartesian.msg"
+	"msg/Pose.msg"
 	"srv/HighState.srv"
 	"srv/Imu.srv"
 	"srv/Mode.srv"
+	
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
     ${msg_files}
