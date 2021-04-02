@@ -59,11 +59,11 @@ int main(int argc, char *argv[]) {
     }
     mode = atoi(argv[1]);
     ClientNode client(mode);
-    rclcpp::WallRate loop_rate(10.0);
-    while (rclcpp::ok())
+    //rclcpp::WallRate loop_rate(10.0);
+    //while (rclcpp::ok())
     {
         client.client_set_mode();
-        loop_rate.sleep();
+    //    loop_rate.sleep();
     }
     
     rclcpp::shutdown();

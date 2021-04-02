@@ -12,7 +12,10 @@ using namespace std::chrono_literals;
 
 class PubNode : public rclcpp::Node {
 public:
-    PubNode() : Node("pub_node"), count_(0) {
+    PubNode(float forwardSpeed, float sideSpeed, float rotateSpeed) : Node("pub_node"), count_(0) {
+        m_forwardSpeed = forwardSpeed;
+        m_sideSpeed = sideSpeed;
+        m_rotateSpeed = rotateSpeed;
         walk_pub = this->create_publisher<geometry_msgs::msg::Twist>(ROS2_TOPIC_SET_VELOCITY, 10);
         timer_ = this->create_wall_timer(500ms, std::bind(&PubNode::pub_callback, this));
     }
@@ -29,11 +32,14 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr walk_pub;
     size_t count_;
+    float m_forwardSpeed;
+    float m_sideSpeed;
+    float m_rotateSpeed;
 };
 
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<PubNode>();
+    auto node = std::make_shared<PubNode>(0.1, 0.1, 0.1);
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;

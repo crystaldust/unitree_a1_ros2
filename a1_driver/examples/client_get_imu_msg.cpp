@@ -39,17 +39,17 @@ void ClientNode::client_node_get_imu_msg() {
         
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT IMU INFO#######################");
         for (i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %12f", i, HighState->imu.quaternion[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %18f", i, HighState->imu.quaternion[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %12f", i, HighState->imu.gyroscope[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, HighState->imu.gyroscope[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %12f", i, HighState->imu.accelerometer[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, HighState->imu.accelerometer[i]);
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %12f", HighState->imu.temperature);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %18f", HighState->imu.temperature);
     } 
     else {
         RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service");
@@ -61,11 +61,11 @@ void ClientNode::client_node_get_imu_msg() {
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
     ClientNode client;
-    rclcpp::WallRate loop_rate(10.0);
-    while (rclcpp::ok())
+    //rclcpp::WallRate loop_rate(10.0);
+    //while (rclcpp::ok())
     {
         client.client_node_get_imu_msg();
-        loop_rate.sleep();
+        //loop_rate.sleep();
     }
     rclcpp::shutdown();
     return 0;

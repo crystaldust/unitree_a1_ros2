@@ -89,6 +89,15 @@ int A1ROS::node_init(int argc, char *argv[]) {
                 wrapper.velocity_set_cmd(msg->linear.x, msg->linear.y, msg->angular.z);
             }
     );
+    auto pose_sub = A1_node->create_subscription<a1_msgs::msg::Pose>(
+            ROS2_TOPIC_SET_POSE,
+            10,
+            [this](a1_msgs::msg::Pose::UniquePtr msg) {
+                RCLCPP_INFO(rclcpp::get_logger("rcv_pose"),
+                            "yaw[%0.2f], pitch[%0.2f], roll[%0.2f], bodyHeight[%0.2f]", msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
+                wrapper.pose_set_cmd(msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
+            }
+    );
     auto mode_service = A1_node->create_service<a1_msgs::srv::Mode>(
             ROS2_TOPIC_SET_MODE,
             [this](const std::shared_ptr<a1_msgs::srv::Mode::Request> request,

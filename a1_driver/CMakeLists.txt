@@ -9,7 +9,7 @@ endif ()
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
-add_definitions(-DSPORT_MODE)
+
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -41,6 +41,10 @@ target_link_libraries(a1_main ${EXTRA_LIBS})
 add_executable(pub_vel_msg examples/pub_vel_msg.cpp
 			   include/comm/comm_ros.h)
 ament_target_dependencies(pub_vel_msg ${dependencies} a1_msgs)
+#pub pose msg
+add_executable(pub_pose_msg examples/pub_pose_msg.cpp
+			   include/comm/comm_ros.h)
+ament_target_dependencies(pub_pose_msg ${dependencies} a1_msgs)
 #client get imu info
 add_executable(client_get_imu examples/client_get_imu_msg.cpp
 			   include/comm/comm_ros.h)
@@ -62,6 +66,7 @@ ament_export_dependencies(${dependencies})
 install(TARGETS
         a1_main
         pub_vel_msg
+		pub_pose_msg
 		client_get_imu
 		client_get_state
 		client_set_mode

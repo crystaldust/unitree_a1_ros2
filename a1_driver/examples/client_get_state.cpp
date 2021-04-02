@@ -37,40 +37,40 @@ void ClientNode::client_node_get_high_state() {
         auto HighState = result.get();
         int i;
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT BASIC INFO#######################");
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "levelFlag: %12u    commVersion: %12u", HighState->levelflag, HighState->commversion);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "robotID: %12u      SN: %12u", HighState->robotid, HighState->sn);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "mode: %12u         bandWidth: %12u", HighState->mode, HighState->bandwidth);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "levelFlag: %12u     commVersion: %-10u", HighState->levelflag, HighState->commversion);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "robotID: %-14u      SN: %-19u", HighState->robotid, HighState->sn);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "mode: %-17u         bandWidth: %-12u", HighState->mode, HighState->bandwidth);
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT VELOCITY INFO#######################");
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "forwardSpeed: %12f   sideSpeed: %12f", HighState->forwardspeed, HighState->sidespeed);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "rotateSpeed: %12f    bodyHeight: %12f", HighState->rotatespeed, HighState->bodyheight);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "updownSpeed: %12f    forwardPosition: %12f", HighState->updownspeed, HighState->forwardposition);
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "sidePosition: %12f", HighState->sideposition);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "forwardSpeed: %20f   sideSpeed: %20f", HighState->forwardspeed, HighState->sidespeed);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "rotateSpeed: %20f    bodyHeight: %20f", HighState->rotatespeed, HighState->bodyheight);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "updownSpeed: %20f    forwardPosition: %20f", HighState->updownspeed, HighState->forwardposition);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "sidePosition: %20f", HighState->sideposition);
         
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT IMU INFO#######################");
         for (i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %12f", i, HighState->imu.quaternion[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %23f", i, HighState->imu.quaternion[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %12f", i, HighState->imu.gyroscope[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %23f", i, HighState->imu.gyroscope[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %12f", i, HighState->imu.accelerometer[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %23f", i, HighState->imu.accelerometer[i]);
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %12f", HighState->imu.temperature);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %23f", HighState->imu.temperature);
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "#################ROBOT FOUR LEGS INFO####################");
         for(i = 0; i< UNITREE_A1_DOG_LEGS; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].x: %12f", i, HighState->footposition2body[i].x);
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].y: %12f", i, HighState->footposition2body[i].y);
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].z: %12f", i, HighState->footposition2body[i].z);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].x: %23f", i, HighState->footposition2body[i].x);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].y: %23f", i, HighState->footposition2body[i].y);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].z: %23f", i, HighState->footposition2body[i].z);
             
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].x: %12f", i, HighState->footspeed2body[i].x);
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].y: %12f", i, HighState->footspeed2body[i].y);
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].z: %12f", i, HighState->footspeed2body[i].z);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].x: %23f", i, HighState->footspeed2body[i].x);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].y: %23f", i, HighState->footspeed2body[i].y);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footspeed2body[i].z: %23f", i, HighState->footspeed2body[i].z);
 
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footforce[i]: %12f", i, HighState->footforce[i]);
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footforceest[i]: %12f", i, HighState->footforceest[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footforce[i]: %23f", i, HighState->footforce[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footforceest[i]: %23f", i, HighState->footforceest[i]);
         }
     } 
     else {
@@ -83,11 +83,11 @@ void ClientNode::client_node_get_high_state() {
 int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
     ClientNode client;
-    rclcpp::WallRate loop_rate(10.0);
-    while (rclcpp::ok())
+    //rclcpp::WallRate loop_rate(10.0);
+    //while (rclcpp::ok())
     {
         client.client_node_get_high_state();
-        loop_rate.sleep();
+        //loop_rate.sleep();
     }
     rclcpp::shutdown();
     return 0;

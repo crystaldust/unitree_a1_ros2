@@ -15,7 +15,9 @@ public:
     A1ROS(std::string node_name) : wrapper(A1Wrapper()) {
         this->node_name = node_name;
     };
-
+    A1ROS(std::string node_name, int sport_mode) : wrapper(A1Wrapper(sport_mode)) {
+        this->node_name = node_name;
+    };
     int node_init(int argc, char *argv[]);
     void set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
                     std::shared_ptr<a1_msgs::srv::Mode::Response> response);
