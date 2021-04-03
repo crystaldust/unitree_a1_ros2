@@ -41,18 +41,15 @@ private:
 float str_to_float(char *str) {
     int i = 0;
     int base = 1;
-    
     float integer = 0, decimal = 0;
-    while(*(str + i) != '\0')
-    {
-        while(*(str + i) >= '0' && *(str + i) <= '9')
-        {
+    
+    while(*(str + i) != '\0') {
+        while(*(str + i) >= '0' && *(str + i) <= '9') {
             integer = integer * 10 + *(str + i) - '0';
             i++;
         }
         i++;
-        while(*(str + i) >= '0' && *(str + i) <= '9')
-        {
+        while(*(str + i) >= '0' && *(str + i) <= '9') {
             decimal = decimal * 10 + *(str + i) - '0';
             base *= 10;
             i++;

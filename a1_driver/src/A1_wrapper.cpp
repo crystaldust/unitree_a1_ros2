@@ -35,18 +35,11 @@ void A1Wrapper::pose_set_cmd(float yaw, float pitch, float roll, float bodyHeigh
     UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
 
     high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
-    if (bodyHeight == 0 && yaw == 0 && pitch == 0 && roll == 0) {
-        
-        high_cmd.bodyHeight = 0;
-        high_cmd.yaw = 0;
-        high_cmd.pitch = 0;
-        high_cmd.roll = 0;
-    } else {
-        high_cmd.bodyHeight = bodyHeight;
-        high_cmd.yaw = yaw;
-        high_cmd.pitch = pitch;
-        high_cmd.roll = roll;
-    }
+    high_cmd.bodyHeight = bodyHeight;
+    high_cmd.yaw = yaw;
+    high_cmd.pitch = pitch;
+    high_cmd.roll = roll;
+    
     udp.SetSend(high_cmd);
     std::cout << "set pose succcess." <<std::endl;
     std::cout << bodyHeight << " " << yaw << " " << pitch <<" " << roll <<std::endl;

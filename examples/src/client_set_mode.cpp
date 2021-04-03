@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
     if (argv[1] == NULL || (atoi(argv[1]) < 0 || atoi(argv[1]) > 2))
     {
-        RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service");
+        RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Invalid number of input parameters.");
         return -1;
     }
     mode = atoi(argv[1]);
