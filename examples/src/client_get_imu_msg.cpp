@@ -50,7 +50,7 @@ void ClientNode::client_node_get_imu_msg() {
         for (i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, HighState->imu.accelerometer[i]);
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %18f", HighState->imu.temperature);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %18d", int(HighState->imu.temperature));
     } 
     else {
         RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service");

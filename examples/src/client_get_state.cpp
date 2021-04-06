@@ -59,7 +59,7 @@ void ClientNode::client_node_get_high_state() {
         for (i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %23f", i, HighState->imu.accelerometer[i]);
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %23f", HighState->imu.temperature);
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %23d", int(HighState->imu.temperature));
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "#################ROBOT FOUR LEGS INFO####################");
         for(i = 0; i< UNITREE_A1_DOG_LEGS; i++) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "footposition2body[i].x: %23f", i, HighState->footposition2body[i].x);

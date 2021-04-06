@@ -37,11 +37,16 @@ private:
 };
 
 float str_to_float(char *str) {
-    int i = 0;
+    int i = 0, flag = 0;
     int base = 1;
     float integer = 0, decimal = 0;
-    
+    float res;
     while(*(str + i) != '\0') {
+		if (*(str + i) == '-') {
+			flag = 1;
+			i++;
+			continue;
+		}
         while(*(str + i) >= '0' && *(str + i) <= '9') {
             integer = integer * 10 + *(str + i) - '0';
             i++;
@@ -53,7 +58,11 @@ float str_to_float(char *str) {
             i++;
         }
     }
-    return integer + decimal/base;
+	res = integer + decimal/base;
+	if (flag == 1) {
+		res = 0 - res;		
+	}
+    return res;
 }
 
 int main(int argc, char *argv[]) {
