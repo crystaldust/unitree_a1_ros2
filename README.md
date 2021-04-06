@@ -14,7 +14,7 @@ The UNOFFICIAL ROS2 driver for Unitree robotics dog A1
 |forwardPosition  |Target position in front of your                               |     Support  |
 | sidePosition    |Target position in side of your body                           |     Support  |
 |footPosition2Body|Position of the feet relative to the body                      |     Support  |
-|footSpeed2Body   |Fppt speed relative to the body                                |     Support  |
+|footSpeed2Body   |Foot speed relative to the body                                |     Support  |
 |footForce        |The force on the foot                                          |     Support  |
 |wirelessREmote   |Wireless command                                               |     Support  |
 |crc              |Checksum                                                       |     Support  |
