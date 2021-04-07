@@ -11,7 +11,7 @@ class ClientNode     {
 public:
     ClientNode() : count_(5) {
         node = rclcpp::Node::make_shared("HighState");
-        client = node->create_client<a1_msgs::srv::HighState>(ROS2_TOPIC_GET_HIGH_STATE_MSG);
+        client = node->create_client<a1_msgs::srv::HighState>(ROS2_SERVICE_GET_HIGH_STATE_MSG);
     }
     void client_node_get_high_state();
 private:

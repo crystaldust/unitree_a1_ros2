@@ -43,6 +43,7 @@ set(msg_files
 	"srv/HighState.srv"
 	"srv/Imu.srv"
 	"srv/Mode.srv"
+	"srv/Cartesian.srv"
 	
 )
 rosidl_generate_interfaces(${PROJECT_NAME}

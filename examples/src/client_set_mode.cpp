@@ -11,7 +11,7 @@ public:
     ClientNode(uint8_t mode) :count_(5) {
         set_mode = mode;
         node = rclcpp::Node::make_shared("server_client");
-        client = node->create_client<a1_msgs::srv::Mode>(ROS2_TOPIC_SET_MODE);
+        client = node->create_client<a1_msgs::srv::Mode>(ROS2_SERVICE_SET_MODE);
     }
     void client_set_mode();
 private:

@@ -25,6 +25,8 @@ public:
                     std::shared_ptr<a1_msgs::srv::HighState::Response> response);
     void get_imu_msg(const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
                     std::shared_ptr<a1_msgs::srv::Imu::Response> response);
+    void get_cartesian_msg(const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
+                std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
     A1Wrapper wrapper;
 private:
     std::string node_name;

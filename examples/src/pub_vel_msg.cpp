@@ -20,7 +20,6 @@ public:
         walk_pub = this->create_publisher<geometry_msgs::msg::Twist>(ROS2_TOPIC_SET_VELOCITY, 10);
         timer_ = this->create_wall_timer(500ms, std::bind(&PubNode::pub_callback, this));
     }
-    void client_node();
 private:
     void pub_callback() {
         geometry_msgs::msg::Twist msg;

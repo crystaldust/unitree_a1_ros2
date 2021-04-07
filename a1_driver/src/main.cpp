@@ -7,24 +7,26 @@
 #define STARTUP_SPORT_MODE 1
 int main(int argc, char *argv[]) {
     std::string node_name = "A1_node";
-    std::string arg;
-    if (argc < 3) {
-        std::cerr << "running ros2 run a1_driver a1_main --node-name A1_node" << std::endl;
+    std::string arg_mode;
+    if (argc != 2) {
+        std::cerr << "Usage:" << std::endl;
+        std::cerr << "[BASIC_MODE]: ros2 run a1_driver a1_main basic" << std::endl;
+        std::cerr << "[SPORT_MODE]: ros2 run a1_driver a1_main sport" << std::endl;
+        return -1;
     }
-    for (int i = 1; i < argc; ++i) {
-        arg = argv[i];
-        if (arg == "--node-name") {
-            node_name = argv[i + 1];
-        }
-    }
-    if (arg == "sport") {
+    arg_mode = argv[1];
+    if (arg_mode == "sport") {
         A1ROS a1_ros = A1ROS(node_name, STARTUP_SPORT_MODE);
         std::cout << "[SPORT_MODE]:creating a node named :" << node_name << std::endl;
         a1_ros.node_init(argc, argv);
-    } else {
+    } else if (arg_mode == "basic") {
         A1ROS a1_ros = A1ROS(node_name);
         std::cout << "[BASIC_MODE]:creating a node named :" << node_name << std::endl;
         a1_ros.node_init(argc, argv);
+    } else {
+        std::cerr << "Usage:" << std::endl;
+        std::cerr << "[BASIC_MODE]: ros2 run a1_driver a1_main basic" << std::endl;
+        std::cerr << "[SPORT_MODE]: ros2 run a1_driver a1_main sport" << std::endl;
     }
     return 0;
 }

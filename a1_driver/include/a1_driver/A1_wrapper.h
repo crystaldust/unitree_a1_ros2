@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "unitree_legged_sdk/unitree_legged_sdk.h"
+#include "a1_comm/A1_comm.h"
 
 enum SetCmd {
     CMD_SET_MODE_STAND = 0,
@@ -37,14 +38,19 @@ public:
     void UDPSend() {
         udp.Send();
     }
-    void velocity_set_cmd(float forwardSpeed, float sideSpeed, float rotateSpeed);
-    void pose_set_cmd(float yaw, float pitch, float roll, float bodyHeight);
-    void mode_set_cmd(uint8_t mode);
-    void recv_high_state();
+    void set_velocity(float forwardSpeed, float sideSpeed, float rotateSpeed);
+    void set_pose(float yaw, float pitch, float roll, float bodyHeight);
+    void set_mode(uint8_t mode);
+    void recv_high_state(std::shared_ptr<a1_msgs::srv::HighState::Response> response);
+    void recv_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response);
+    void recv_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
     UNITREE_LEGGED_SDK::UDP udp;
     UNITREE_LEGGED_SDK::Safety safety;
     UNITREE_LEGGED_SDK::HighCmd cmd;
     UNITREE_LEGGED_SDK::HighState state= {0};
+    UNITREE_LEGGED_SDK::IMU imu = {0};
+    UNITREE_LEGGED_SDK::Cartesian footPosition2Body[4] = {0};
+    UNITREE_LEGGED_SDK::Cartesian footSpeed2Body[4] = {0};
 };
 
 #endif //UNITREE_DRIVER_A1_WRAPPER_H

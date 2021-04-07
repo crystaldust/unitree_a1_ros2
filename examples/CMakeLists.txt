@@ -33,11 +33,12 @@ ament_target_dependencies(pub_pose_msg ${dependencies} a1_msgs)
 #client get imu info
 add_executable(client_get_imu src/client_get_imu_msg.cpp)
 ament_target_dependencies(client_get_imu ${dependencies} a1_msgs)
-
 #client get high state info
 add_executable(client_get_state src/client_get_state.cpp)
 ament_target_dependencies(client_get_state ${dependencies} a1_msgs)
-
+#client get Cartesian info
+add_executable(client_get_cartesian src/client_get_cartesian_msg.cpp)
+ament_target_dependencies(client_get_cartesian ${dependencies} a1_msgs)
 #client set mode
 add_executable(client_set_mode src/client_set_mode.cpp)
 ament_target_dependencies(client_set_mode ${dependencies} a1_msgs)
@@ -50,6 +51,7 @@ install(TARGETS
 		client_get_imu
 		client_get_state
 		client_set_mode
+		client_get_cartesian
         DESTINATION lib/${PROJECT_NAME}
         )
 

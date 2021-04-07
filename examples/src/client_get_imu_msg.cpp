@@ -11,7 +11,7 @@ class ClientNode  {
 public:
     ClientNode() :     count_(5) {
         node = rclcpp::Node::make_shared("GetImuMsg");
-        client = node->create_client<a1_msgs::srv::Imu>(ROS2_TOPIC_GET_IMU_MSG);
+        client = node->create_client<a1_msgs::srv::Imu>(ROS2_SERVICE_GET_IMU_MSG);
     }
     void client_node_get_imu_msg();
 private:
@@ -35,22 +35,22 @@ void ClientNode::client_node_get_imu_msg() {
     if (rclcpp::spin_until_future_complete(node, result) ==
         rclcpp::executor::FutureReturnCode::SUCCESS)
     {
-        auto HighState = result.get();
+        auto IMU = result.get();
         int i;
         
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "##############ROBOT IMU INFO#######################");
         for (i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %18f", i, HighState->imu.quaternion[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.quaternion[%d]: %18f", i, IMU->imu.quaternion[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, HighState->imu.gyroscope[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, IMU->imu.gyroscope[i]);
         }
 
         for (i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, HighState->imu.accelerometer[i]);
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.gyroscope[%d]: %18f", i, IMU->imu.accelerometer[i]);
         }
-        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %18d", int(HighState->imu.temperature));
+        RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "imu.temperature: %18d", int(IMU->imu.temperature));
     } 
     else {
         RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Failed to call service");
