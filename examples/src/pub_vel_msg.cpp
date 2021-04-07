@@ -45,11 +45,11 @@ float str_to_float(char *str) {
     float res;
     
     while(*(str + i) != '\0') {
-		if (*(str + i) == '-') {
-			flag = 1;
-			i++;
-			continue;
-		}
+        if (*(str + i) == '-') {
+            flag = 1;
+            i++;
+            continue;
+        }
         while(*(str + i) >= '0' && *(str + i) <= '9') {
             integer = integer * 10 + *(str + i) - '0';
             i++;
@@ -61,10 +61,10 @@ float str_to_float(char *str) {
             i++;
         }
     }
-	res = integer + decimal/base;
-	if (flag == 1) {
-		res = 0 - res;
-	}
+    res = integer + decimal/base;
+    if (flag == 1) {
+        res = 0 - res;
+    }
     return res;
 }
 int main(int argc, char *argv[]) {
@@ -77,10 +77,10 @@ int main(int argc, char *argv[]) {
         RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Invalid number of input parameters");
         return -1;
     }
-    for (int i = 1; i <=3; i++) {
-        if (strlen(argv[i]) > 4 || strstr(argv[i], ".") == NULL || str_to_float(argv[i]) < -1 || str_to_float(argv[i]) > 1) {
+    for (int i = 1; i <= 3; i++) {
+        if (strlen(argv[i]) > 7 || strstr(argv[i], ".") == NULL || str_to_float(argv[i]) < -1 || str_to_float(argv[i]) > 1) {
             RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "The input parameter content is not valid");
-            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "ros2 run a1_example pub_vel_msg 0.52 1.0 0.09");
+            RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "ros2 run a1_example pub_vel_msg -0.52 1.0 0.09");
             return -1;
         }
     }
