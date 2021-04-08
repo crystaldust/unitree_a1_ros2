@@ -1,13 +1,16 @@
 #ifndef UNITREE_A1_ROS2_COMMON_H
 #define UNITREE_A1_ROS2_COMMON_H
 
-#include "geometry_msgs/msg/twist.hpp"
-#include "a1_msgs/srv/mode.hpp"
-#include "a1_msgs/srv/high_state.hpp"
-#include "a1_msgs/srv/imu.hpp"
-#include "a1_msgs/srv/cartesian.hpp"
-#include "a1_msgs/msg/pose.hpp"
+enum StartupMode {
+    STARTUP_BASIC_MODE = 0,
+    STARTUP_SPORT_MODE
+};
 
+enum SetCmd {
+    CMD_SET_MODE_STAND = 0,
+    CMD_SET_MODE_FORCE_STAND,
+    CMD_SET_MODE_WALK
+};
 //IMU
 #define UNITREE_A1_IMU_QUATERNION 4
 #define UNITREE_A1_IMU_ANGULAR_VELOCITY  3
@@ -17,7 +20,7 @@
 
 //TOPIC
 #define ROS2_TOPIC_SET_VELOCITY "unitree_a1/cmd_vel"
-#define ROS2_TOPIC_SET_POSE "unitree_a1/set_pose"
+#define ROS2_TOPIC_SET_POSE "unitree_a1/cmd_pose"
 //Service
 #define ROS2_SERVICE_SET_MODE "unitree_a1/set_mode"
 #define ROS2_SERVICE_GET_HIGH_STATE_MSG "unitree_a1/get_high_state"

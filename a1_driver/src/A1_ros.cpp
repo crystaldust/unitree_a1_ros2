@@ -78,8 +78,8 @@ int A1ROS::node_init(int argc, char *argv[]) {
     );
     UNITREE_LEGGED_SDK::InitEnvironment();
     float dt = 0.002f;
-    UNITREE_LEGGED_SDK::LoopFunc loop_udpRecv("udp_recv", dt, 1, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
-    UNITREE_LEGGED_SDK::LoopFunc loop_udpSend("udp_send", dt, 1, boost::bind(&A1Wrapper::UDPSend, &wrapper));
+    UNITREE_LEGGED_SDK::LoopFunc loop_udpRecv("udp_recv", dt, 3, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
+    UNITREE_LEGGED_SDK::LoopFunc loop_udpSend("udp_send", dt, 3, boost::bind(&A1Wrapper::UDPSend, &wrapper));
     loop_udpRecv.start();
     loop_udpSend.start();
     rclcpp::spin(A1_node);

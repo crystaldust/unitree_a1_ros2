@@ -4,7 +4,7 @@
 
 #include "a1_driver/A1_ros.h"
 #include "a1_driver/A1_wrapper.h"
-#define STARTUP_SPORT_MODE 1
+
 int main(int argc, char *argv[]) {
     std::string node_name = "A1_node";
     std::string arg_mode;

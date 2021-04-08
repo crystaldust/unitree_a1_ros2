@@ -20,7 +20,6 @@ void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed, float rotateSp
         high_cmd.rotateSpeed = rotateSpeed;
     }
     udp.SetSend(high_cmd);
-    std::cout << "set speed succcess."  <<std::endl;
 }
 
 void A1Wrapper::set_mode(uint8_t mode) {
@@ -28,37 +27,33 @@ void A1Wrapper::set_mode(uint8_t mode) {
 
     high_cmd.mode = mode;
     udp.SetSend(high_cmd);
-    std::cout << "set mode succcess. mode = " << int(mode) <<std::endl;
 }
 
 void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight) {
     UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
 
     high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
-    high_cmd.bodyHeight = bodyHeight;
     high_cmd.yaw = yaw;
     high_cmd.pitch = pitch;
     high_cmd.roll = roll;
-    
+    high_cmd.bodyHeight = bodyHeight;
     udp.SetSend(high_cmd);
-    std::cout << "set pose succcess." <<std::endl;
-    std::cout << bodyHeight << " " << yaw << " " << pitch <<" " << roll <<std::endl;
 }
 
 void A1Wrapper::recv_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
     udp.GetRecv(state);
     for (int i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
-        response->imu.quaternion[i] = state.imu.quaternion[i];
+        response->quaternion[i] = state.imu.quaternion[i];
     }
     
     for (int i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
-        response->imu.gyroscope[i] = state.imu.gyroscope[i];
+        response->gyroscope[i] = state.imu.gyroscope[i];
     }
 
     for (int i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
-        response->imu.accelerometer[i] = state.imu.accelerometer[i];
+        response->accelerometer[i] = state.imu.accelerometer[i];
     }
-    response->imu.temperature = int(state.imu.temperature);
+    response->temperature = int(state.imu.temperature);
 }
 
 void A1Wrapper::recv_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
@@ -95,8 +90,8 @@ void A1Wrapper::recv_high_state(std::shared_ptr<a1_msgs::srv::HighState::Respons
     response->forwardspeed = state.forwardSpeed;
     response->sidespeed    = state.sideSpeed;
     response->rotatespeed  = state.rotateSpeed;
-    response->bodyheight = state.bodyHeight;
-    response->updownspeed = state.updownSpeed;
+    response->bodyheight   = state.bodyHeight;
+    response->updownspeed  = state.updownSpeed;
     response->forwardposition = state.forwardPosition;
     response->sideposition = state.sidePosition;
     //Cartesian

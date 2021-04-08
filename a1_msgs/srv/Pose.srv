@@ -1,0 +1,6 @@
+uint8 flag
+---
+float32 forwardspeed
+float32 sidespeed
+float32 rotatespeed
+float32 updownspeed
