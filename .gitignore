@@ -4,3 +4,5 @@ install/*
 .idea/*
 transfer.sh
 */.idea/*
+
+**/cmake-build-debug/

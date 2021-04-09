@@ -6,7 +6,7 @@
 #include "a1_driver/A1_wrapper.h"
 
 void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed, float rotateSpeed) {
-    UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
+    UNITREE_LEGGED_SDK::HighCmd high_cmd {};
     
     if (forwardSpeed == 0 && sideSpeed == 0 && rotateSpeed == 0) {
         high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
@@ -23,14 +23,14 @@ void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed, float rotateSp
 }
 
 void A1Wrapper::set_mode(uint8_t mode) {
-    UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
+    UNITREE_LEGGED_SDK::HighCmd high_cmd {};
 
     high_cmd.mode = mode;
     udp.SetSend(high_cmd);
 }
 
 void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight) {
-    UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
+    UNITREE_LEGGED_SDK::HighCmd high_cmd {};
 
     high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
     high_cmd.yaw = yaw;

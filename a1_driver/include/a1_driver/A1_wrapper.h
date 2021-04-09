@@ -28,6 +28,7 @@ public:
     }
     /*basic mode*/
     A1Wrapper() : udp(UNITREE_LEGGED_SDK::HIGHLEVEL), safety(UNITREE_LEGGED_SDK::LeggedType::A1), r_mode(0) {
+      this->cmd = UNITREE_LEGGED_SDK::HighCmd();
         udp.InitCmdData(cmd);
     }
     void UDPRecv() {
@@ -45,7 +46,7 @@ public:
     void recv_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
     UNITREE_LEGGED_SDK::UDP udp;
     UNITREE_LEGGED_SDK::Safety safety;
-    UNITREE_LEGGED_SDK::HighCmd cmd = {0};
+    UNITREE_LEGGED_SDK::HighCmd cmd;
     UNITREE_LEGGED_SDK::HighState state;
     uint8_t r_mode;
 };
