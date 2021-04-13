@@ -33,7 +33,7 @@ const char *get_arg(char *argv[]) {
 }
 // works: ./cmd --mode sports
 // works: ./cmd --mode=sports
-int parse_commandline(int argc, char *argv[], std::string &node_name, std::string &mode) {
+bool parse_commandline(int argc, char *argv[], std::string &node_name, std::string &mode) {
     const char *short_options = "m::n::";
     const option long_options[] = {
         {"mode", optional_argument, nullptr, 'm'},
@@ -51,18 +51,18 @@ int parse_commandline(int argc, char *argv[], std::string &node_name, std::strin
                 node_name = std::string(get_arg(argv));
                 break;
             default:
-                return -1;
+                return false;
         }
     }
     cout << "running node [" << node_name << "] in {" << mode << "} mode" << endl;
-    return 0;
+    return true;
 }
 
 int main(int argc, char *argv[]) {
     std::string node_name = "a1_node";
     std::string arg_mode = "sports";
     //  Parse the commandline arguments
-    if (-1 == parse_commandline(argc, argv, node_name, arg_mode)) {
+    if (false == parse_commandline(argc, argv, node_name, arg_mode)) {
         print_help();
         return -1;
     }
@@ -79,5 +79,6 @@ int main(int argc, char *argv[]) {
         print_help();
         return -1;
     }
+    
     return 0;
 }

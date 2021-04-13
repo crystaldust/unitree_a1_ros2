@@ -4,28 +4,20 @@
 
 #include "a1_driver/A1_ros.h"
 
-void A1ROS::get_high_state_msg(const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
-                   std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
-    request->flag = UNUSED_VARIABLE_MARK;
+void A1ROS::get_high_state_msg(std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
     wrapper.recv_high_state(response);
 }
 
-void A1ROS::get_imu_msg(const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
-                  std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
-    request->flag = UNUSED_VARIABLE_MARK;
+void A1ROS::get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
     wrapper.recv_imu_msg(response);
 }
 
-void A1ROS::get_cartesian_msg(const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
-                std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
-    request->flag = UNUSED_VARIABLE_MARK;
+void A1ROS::get_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
     wrapper.recv_cartesian_msg(response);
 }
 
-void A1ROS::set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
-                  std::shared_ptr<a1_msgs::srv::Mode::Response> response) {
+void A1ROS::set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request) {
     wrapper.set_mode(request->mode);
-    response->value = UNUSED_VARIABLE_MARK;
 }
 int A1ROS::node_init(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
@@ -55,14 +47,14 @@ int A1ROS::node_init(int argc, char *argv[]) {
             ROS2_SERVICE_SET_MODE,
             [this](const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
                    std::shared_ptr<a1_msgs::srv::Mode::Response> response) {
-                set_mode(request, response);
+                set_mode(request);
             }
     );
     auto hgih_state_service = A1_node->create_service<a1_msgs::srv::HighState>(
             ROS2_SERVICE_GET_HIGH_STATE_MSG,
             [this](const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
                    std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
-                get_high_state_msg(request, response);
+                get_high_state_msg(response);
             }
     );
 
@@ -70,14 +62,14 @@ int A1ROS::node_init(int argc, char *argv[]) {
             ROS2_SERVICE_GET_IMU_MSG,
             [this](const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
                    std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
-                get_imu_msg(request, response);
+                get_imu_msg(response);
             }
     );
     auto cartesian_service = A1_node->create_service<a1_msgs::srv::Cartesian>(
             ROS2_SERVICE_GET_CARTESIAN_MSG,
             [this](const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
                    std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
-                get_cartesian_msg(request, response);
+                get_cartesian_msg(response);
             }
     );
     UNITREE_LEGGED_SDK::InitEnvironment();

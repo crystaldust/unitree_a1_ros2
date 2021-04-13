@@ -1,4 +1,3 @@
-uint8 flag
 ---
 float32[4] quaternion
 float32[3] gyroscope

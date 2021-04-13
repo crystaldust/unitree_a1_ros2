@@ -25,14 +25,10 @@ public:
         this->node_name = node_name;
     };
     int node_init(int argc, char *argv[]);
-    void set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
-                    std::shared_ptr<a1_msgs::srv::Mode::Response> response);
-    void get_high_state_msg(const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
-                    std::shared_ptr<a1_msgs::srv::HighState::Response> response);
-    void get_imu_msg(const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
-                    std::shared_ptr<a1_msgs::srv::Imu::Response> response);
-    void get_cartesian_msg(const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
-                std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
+    void set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request);
+    void get_high_state_msg(std::shared_ptr<a1_msgs::srv::HighState::Response> response);
+    void get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response);
+    void get_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
     A1Wrapper wrapper;
 private:
     std::string node_name;
