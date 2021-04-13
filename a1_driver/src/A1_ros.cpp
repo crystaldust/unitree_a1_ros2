@@ -6,22 +6,26 @@
 
 void A1ROS::get_high_state_msg(const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
                    std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
+    request->flag = UNUSED_VARIABLE_MARK;
     wrapper.recv_high_state(response);
 }
 
 void A1ROS::get_imu_msg(const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
                   std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
+    request->flag = UNUSED_VARIABLE_MARK;
     wrapper.recv_imu_msg(response);
 }
 
 void A1ROS::get_cartesian_msg(const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
                 std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
+    request->flag = UNUSED_VARIABLE_MARK;
     wrapper.recv_cartesian_msg(response);
 }
 
 void A1ROS::set_mode(const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
                   std::shared_ptr<a1_msgs::srv::Mode::Response> response) {
     wrapper.set_mode(request->mode);
+    response->value = UNUSED_VARIABLE_MARK;
 }
 int A1ROS::node_init(int argc, char *argv[]) {
     rclcpp::init(argc, argv);
@@ -84,4 +88,5 @@ int A1ROS::node_init(int argc, char *argv[]) {
     loop_udpSend.start();
     rclcpp::spin(A1_node);
     rclcpp::shutdown();
+    return 0;
 }
