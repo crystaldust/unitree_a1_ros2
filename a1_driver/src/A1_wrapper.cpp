@@ -50,6 +50,6 @@ void A1Wrapper::recv_cartesian_msg() {
     udp.GetRecv(state);
 }
 
-void A1Wrapper::recv_high_state() {
+void A1Wrapper::recv_high_state(){
     udp.GetRecv(state);
 }

@@ -4,7 +4,7 @@
 
 #include "a1_driver/A1_ros.h"
 
-void A1ROS::get_high_state_msg(std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
+void A1ROS::get_high_state_msg(HighStateResponse response) {
     wrapper.recv_high_state();
     response->levelflag = wrapper.state.levelFlag;
     response->commversion = wrapper.state.commVersion;
@@ -49,12 +49,14 @@ void A1ROS::get_high_state_msg(std::shared_ptr<a1_msgs::srv::HighState::Response
     response->crc = wrapper.state.crc;
 }
 
-void A1ROS::get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
+void A1ROS::get_imu_msg(ImuResponse response) {
     wrapper.recv_imu_msg();
+    char buf[100];
     for (int i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
         response->quaternion[i] = wrapper.state.imu.quaternion[i];
+
     }
-    
+    memcpy((void*)&response->quaternion[0], buf, 100);
     for (int i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
         response->gyroscope[i] = wrapper.state.imu.gyroscope[i];
     }
@@ -65,7 +67,7 @@ void A1ROS::get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
     response->temperature = int(wrapper.state.imu.temperature);
 }
 
-void A1ROS::get_cartesian_msg(std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
+void A1ROS::get_cartesian_msg(CartesianResponse response) {
     wrapper.recv_cartesian_msg();
     for(int i = 0; i< UNITREE_A1_DOG_LEGS; i++) {
         response->footposition2body[i].x = wrapper.state.footPosition2Body[i].x;
@@ -103,30 +105,30 @@ int A1ROS::node_init(int argc, char *argv[]) {
     );
     auto mode_service = A1_node->create_service<a1_msgs::srv::Mode>(
             ROS2_SERVICE_SET_MODE,
-            [this](const std::shared_ptr<a1_msgs::srv::Mode::Request> request,
-                   std::shared_ptr<a1_msgs::srv::Mode::Response> response) {
+            [this](const ModeRequest request,
+                   ModeResponse response) {
                 response->value = wrapper.set_mode(request->mode);
             }
     );
     auto hgih_state_service = A1_node->create_service<a1_msgs::srv::HighState>(
             ROS2_SERVICE_GET_HIGH_STATE_MSG,
-            [this](const std::shared_ptr<a1_msgs::srv::HighState::Request> request,
-                   std::shared_ptr<a1_msgs::srv::HighState::Response> response) {
+            [this](const HighStateRequest request,
+                   HighStateResponse response) {
                 get_high_state_msg(response);
             }
     );
 
     auto imu_service = A1_node->create_service<a1_msgs::srv::Imu>(
             ROS2_SERVICE_GET_IMU_MSG,
-            [this](const std::shared_ptr<a1_msgs::srv::Imu::Request> request,
-                   std::shared_ptr<a1_msgs::srv::Imu::Response> response) {
+            [this](const ImuRequest request,
+                   ImuResponse response) {
                 get_imu_msg(response);
             }
     );
     auto cartesian_service = A1_node->create_service<a1_msgs::srv::Cartesian>(
             ROS2_SERVICE_GET_CARTESIAN_MSG,
-            [this](const std::shared_ptr<a1_msgs::srv::Cartesian::Request> request,
-                   std::shared_ptr<a1_msgs::srv::Cartesian::Response> response) {
+            [this](const CartesianRequest request,
+                   CartesianResponse response) {
                 get_cartesian_msg(response);
             }
     );

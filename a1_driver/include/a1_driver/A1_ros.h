@@ -31,6 +31,14 @@ public:
     A1Wrapper wrapper;
 private:
     std::string node_name;
+    using ModeRequest = std::shared_ptr<a1_msgs::srv::Mode::Request>;
+    using ModeResponse = std::shared_ptr<a1_msgs::srv::Mode::Response>;
+    using HighStateRequest = std::shared_ptr<a1_msgs::srv::HighState::Request>;
+    using HighStateResponse = std::shared_ptr<a1_msgs::srv::HighState::Response>;
+    using ImuRequest = std::shared_ptr<a1_msgs::srv::Imu::Request>;
+    using ImuResponse = std::shared_ptr<a1_msgs::srv::Imu::Response>;
+    using CartesianRequest = std::shared_ptr<a1_msgs::srv::Cartesian::Request>;
+    using CartesianResponse = std::shared_ptr<a1_msgs::srv::Cartesian::Response>;
 };
 
 #endif //UNITREE_DRIVER_A1_ROS_H
