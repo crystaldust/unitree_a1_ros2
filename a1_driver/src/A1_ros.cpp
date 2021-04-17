@@ -51,12 +51,10 @@ void A1ROS::get_high_state_msg(HighStateResponse response) {
 
 void A1ROS::get_imu_msg(ImuResponse response) {
     wrapper.recv_imu_msg();
-    char buf[100];
     for (int i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
         response->quaternion[i] = wrapper.state.imu.quaternion[i];
 
     }
-    memcpy((void*)&response->quaternion[0], buf, 100);
     for (int i = 0; i < UNITREE_A1_IMU_ANGULAR_VELOCITY; i++) {
         response->gyroscope[i] = wrapper.state.imu.gyroscope[i];
     }
