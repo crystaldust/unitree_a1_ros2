@@ -5,12 +5,15 @@
 #include <unistd.h>
 #include <iomanip>
 #include <iostream>
+#include <string>
 #include "a1_driver/A1_ros.h"
 #include "a1_driver/A1_wrapper.h"
 
-using namespace std;
+using std::cout;
+using std::endl;
 
-void print_help() {
+void print_help()
+{
   std::cout << "Usage:" << endl
             << std::left << std::setw(20) << "--node_name -n:"
             << "Name of the serving ROS node, 'a1_node' by default" << endl
@@ -21,7 +24,8 @@ void print_help() {
             << "PATH_TO_CMD --mode sports --node_name my_a1_node" << endl;
 }
 
-const char *get_arg(char *argv[]) {
+const char *get_arg(char *argv[])
+{
   if (optarg != nullptr) {
     return optarg;
   }
@@ -35,7 +39,8 @@ const char *get_arg(char *argv[]) {
 // works: ./cmd --mode sports
 // works: ./cmd --mode=sports
 bool parse_commandline(int argc, char *argv[], std::string &node_name,
-                       std::string &mode) {
+                       std::string &mode)
+{
   const char *short_options = "m::n::";
   const option long_options[] = {{"mode", optional_argument, nullptr, 'm'},
                                  {"node_name", optional_argument, nullptr, 'n'},
@@ -59,7 +64,8 @@ bool parse_commandline(int argc, char *argv[], std::string &node_name,
   return true;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
   std::string node_name = "a1_node";
   std::string arg_mode = "sports";
   //  Parse the commandline arguments

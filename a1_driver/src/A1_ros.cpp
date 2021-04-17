@@ -4,7 +4,8 @@
 
 #include "a1_driver/A1_ros.h"
 
-void A1ROS::get_high_state_msg(HighStateResponse response) {
+void A1ROS::get_high_state_msg(HighStateResponse response)
+{
   wrapper.recv_high_state();
   response->levelflag = wrapper.state.levelFlag;
   response->commversion = wrapper.state.commVersion;
@@ -22,7 +23,7 @@ void A1ROS::get_high_state_msg(HighStateResponse response) {
   for (int i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
     response->imu.accelerometer[i] = wrapper.state.imu.accelerometer[i];
   }
-  response->imu.temperature = int(wrapper.state.imu.temperature);
+  response->imu.temperature = static_cast<int>(wrapper.state.imu.temperature);
   response->forwardspeed = wrapper.state.forwardSpeed;
   response->sidespeed = wrapper.state.sideSpeed;
   response->rotatespeed = wrapper.state.rotateSpeed;
@@ -49,7 +50,8 @@ void A1ROS::get_high_state_msg(HighStateResponse response) {
   response->crc = wrapper.state.crc;
 }
 
-void A1ROS::get_imu_msg(ImuResponse response) {
+void A1ROS::get_imu_msg(ImuResponse response)
+{
   wrapper.recv_imu_msg();
   for (int i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
     response->quaternion[i] = wrapper.state.imu.quaternion[i];
@@ -61,10 +63,11 @@ void A1ROS::get_imu_msg(ImuResponse response) {
   for (int i = 0; i < UNITREE_A1_IMU_ACCELEROMETER; i++) {
     response->accelerometer[i] = wrapper.state.imu.accelerometer[i];
   }
-  response->temperature = int(wrapper.state.imu.temperature);
+  response->temperature = static_cast<int>(wrapper.state.imu.temperature);
 }
 
-void A1ROS::get_cartesian_msg(CartesianResponse response) {
+void A1ROS::get_cartesian_msg(CartesianResponse response)
+{
   wrapper.recv_cartesian_msg();
   for (int i = 0; i < UNITREE_A1_DOG_LEGS; i++) {
     response->footposition2body[i].x = wrapper.state.footPosition2Body[i].x;
@@ -76,7 +79,8 @@ void A1ROS::get_cartesian_msg(CartesianResponse response) {
   }
 }
 
-int A1ROS::node_init(int argc, char *argv[]) {
+int A1ROS::node_init(int argc, char *argv[])
+{
   rclcpp::init(argc, argv);
 
   auto A1_node = rclcpp::Node::make_shared(this->node_name);

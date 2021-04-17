@@ -2,10 +2,11 @@
 // Created by sun on 2021/3/1.
 //
 
-#ifndef UNITREE_DRIVER_A1_ROS_H
-#define UNITREE_DRIVER_A1_ROS_H
+#ifndef A1_DRIVER__A1_ROS_H_
+#define A1_DRIVER__A1_ROS_H_
 
 #include <memory>
+#include <string>
 #include "a1_comm/A1_comm.h"
 #include "a1_driver/A1_wrapper.h"
 #include "a1_msgs/msg/pose.hpp"
@@ -18,13 +19,13 @@
 
 class A1ROS {
  public:
-  A1ROS(std::string node_name) : wrapper(A1Wrapper()) {
+    explicit A1ROS(std::string node_name) : wrapper(A1Wrapper()) {
     this->node_name = node_name;
-  };
+  }
   A1ROS(std::string node_name, uint8_t sport_mode)
       : wrapper(A1Wrapper(sport_mode)) {
     this->node_name = node_name;
-  };
+  }
   int node_init(int argc, char *argv[]);
   void get_high_state_msg(
       std::shared_ptr<a1_msgs::srv::HighState::Response> response);
@@ -45,4 +46,4 @@ class A1ROS {
   using CartesianResponse = std::shared_ptr<a1_msgs::srv::Cartesian::Response>;
 };
 
-#endif  // UNITREE_DRIVER_A1_ROS_H
+#endif  // A1_DRIVER__A1_ROS_H_

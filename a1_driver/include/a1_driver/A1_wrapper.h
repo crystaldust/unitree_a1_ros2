@@ -2,8 +2,8 @@
 // Created by sun on 2021/3/1.
 //
 
-#ifndef UNITREE_DRIVER_A1_WRAPPER_H
-#define UNITREE_DRIVER_A1_WRAPPER_H
+#ifndef A1_DRIVER__A1_WRAPPER_H_
+#define A1_DRIVER__A1_WRAPPER_H_
 
 #include <iostream>
 #include "a1_comm/A1_comm.h"
@@ -15,7 +15,7 @@
 class A1Wrapper {
  public:
   /*sport mode*/
-  A1Wrapper(uint8_t sport_mode)
+  explicit A1Wrapper(uint8_t sport_mode)
       : udp(8081, "192.168.123.161", 8082, SEND_LENGTH, RECV_LENGTH),
         safety(UNITREE_LEGGED_SDK::LeggedType::A1) {
     memset(&cmd, 0, sizeof(cmd));
@@ -45,4 +45,5 @@ class A1Wrapper {
   uint8_t r_mode;
 };
 
-#endif  // UNITREE_DRIVER_A1_WRAPPER_H
+#endif  // A1_DRIVER__A1_WRAPPER_H_
+

@@ -1,5 +1,5 @@
-#ifndef UNITREE_A1_ROS2_COMMON_H
-#define UNITREE_A1_ROS2_COMMON_H
+#ifndef A1_COMM__A1_COMM_H_
+#define A1_COMM__A1_COMM_H_
 
 enum StartupMode { STARTUP_BASIC_MODE = 0, STARTUP_SPORT_MODE };
 
@@ -23,4 +23,4 @@ enum SetCmd {
 #define ROS2_SERVICE_GET_HIGH_STATE_MSG "unitree_a1/get_high_state"
 #define ROS2_SERVICE_GET_IMU_MSG "unitree_a1/get_imu_msg"
 #define ROS2_SERVICE_GET_CARTESIAN_MSG "unitree_a1/get_cartesian_msg"
-#endif  // UNITREE_A1_ROS2_COMMON_H
+#endif  // A1_COMM__A1_COMM_H_
