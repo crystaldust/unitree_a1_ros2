@@ -1,5 +1,31 @@
 # Unitree A1 ROS2 Driver
 The UNOFFICIAL ROS2 driver for Unitree robotics dog A1
+
+
+
+## Setting up
+
+#### Setup the unitree legged SDK
+- Get the SDK's headers and libs at [unitree_legged_sdk](https://github.com/unitreerobotics/unitree_legged_sdk), let's assume you put it to `/home/yourname/unitree_legged_sdk`
+- Set the environment variables(bash as an example):
+```bash
+# Put the scripts to .bashrc to take effect every time a new shell session is started
+export UNITREE_LEGGED_SDK_PATH=/home/yourname/unitree_legged_sdk
+export UNITREE_PLATFORM=arm64 # Or 'amd64' if you run the code on a x86 architecure
+```
+
+#### Install lcm
+[LCM](https://github.com/lcm-proj/lcm) is a messaging tool that unitree SDK relies on for real time messaging. While ROS2 natively support real-time messaging based on DDS. So LCM is actually not needed for the ROS2 driver. But the unitree SDK's lib files are complied to link the LCM library, so we have to provide the lib files to make the driver run.
+To install LCM, just download the code at https://github.com/lcm-proj/lcm, and follow the general cmake project compilation steps:
+```bash
+$ git clone https://github.com/lcm-proj/lcm
+$ mkdir lcm/build
+$ cd lcm/build
+$ cmake cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ../ # by default, cmake set the prefix to /usr/local, where on some distributions is not obtained by default.
+$ make # add -jN to enable multi core compiling
+$ sudo make install
+```
+
 ## Unitree A1 high level state support list
 
 The Unitree SDK define a "HighState" to present the high level control of the robotics dog, there are still some constraints of the driver because some features are missing from the SDK([unitree_legged_sdk](https://github.com/unitreerobotics/unitree_legged_sdk))
