@@ -9,11 +9,11 @@ endif ()
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
-
+add_definitions(-DSPORT_MODE)
 find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
-
+find_package(a1_msgs REQUIRED)
 set(dependencies
         rclcpp
         geometry_msgs
@@ -33,11 +33,11 @@ add_executable(a1_main src/main.cpp
         include/a1_driver/A1_ros.h
         src/A1_wrapper.cpp
         include/a1_driver/A1_wrapper.h)
-ament_target_dependencies(a1_main ${dependencies})
+ament_target_dependencies(a1_main ${dependencies} a1_msgs)
 target_link_libraries(a1_main ${EXTRA_LIBS})
 
 add_executable(msg_pub examples/msg_pub.cpp)
-ament_target_dependencies(msg_pub ${dependencies})
+ament_target_dependencies(msg_pub ${dependencies} a1_msgs)
 
 ament_export_include_directories(include)
 ament_export_dependencies(${dependencies})

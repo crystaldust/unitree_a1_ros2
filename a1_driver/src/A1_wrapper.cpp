@@ -6,55 +6,77 @@
 #include "a1_driver/A1_wrapper.h"
 
 void A1Wrapper::walkCmd(float forwardSpeed, float sideSpeed, float rotateSpeed) {
+    UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
+    
+    if (forwardSpeed == 0 && sideSpeed == 0 && rotateSpeed == 0)
+    {
+        high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+        high_cmd.forwardSpeed = forwardSpeed;
+        high_cmd.sideSpeed = sideSpeed;
+        high_cmd.rotateSpeed = rotateSpeed;
+    }
+    else
+    {
+        high_cmd.mode = CMD_SET_MODE_WALK;
+        high_cmd.forwardSpeed = forwardSpeed;
+        high_cmd.sideSpeed = sideSpeed;
+        high_cmd.rotateSpeed = rotateSpeed;
+    }
+    udp.SetSend(high_cmd);
+}
 
-    UNITREE_LEGGED_SDK::HighState current_state;
+void A1Wrapper::setControlCmd(uint8_t mode, float value){
     UNITREE_LEGGED_SDK::HighCmd high_cmd = {0};
 
-    udp.GetRecv(current_state);
-//    unitree a1 cannot send correct state information now, this function is unfinished. (From Unitree Development Team)
-//    std::cout << unsigned(current_state.mode) << std::endl;
-
-//    step 1 : UDP mode = 1
-    high_cmd.mode = 1;
-    std::cout << "change mode : 0 -> 1, sleep : 2s." << std::endl;
-    udp.SetSend(high_cmd);
-    sleep(2);
-
-//    step 2 : mode = 2
-    high_cmd.mode = 2;
-    std::cout << "change mode : 1 -> 2, sleep : 2s." << std::endl;
-    udp.SetSend(high_cmd);
-    sleep(2);
-
-//    step 3: walk
-    std::cout << "walk 4s" << std::endl;
-    high_cmd.forwardSpeed = forwardSpeed;
-    high_cmd.sideSpeed = sideSpeed;
-    high_cmd.rotateSpeed = rotateSpeed;
-    udp.SetSend(high_cmd);
-    sleep(4);
-
-    std::cout << "stop 10s" << std::endl;
-    stop();
+    switch (mode){
+        case CMD_SET_MODE_STAND:
+        case CMD_SET_MODE_FORCE_STAND:
+        case CMD_SET_MODE_WALK:
+            high_cmd.mode = mode;
+            break;
+        case CMD_SET_YAW_UP:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.yaw = value;
+            break;
+        case CMD_SET_YAW_DOWN:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.yaw = value;
+            break;
+        case CMD_SET_PITCH_UP:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.pitch = value;
+            break;
+        case CMD_SET_PITCH_DOWN:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.pitch = value;
+            break;
+        case CMD_SET_ROLL_LEFT:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.roll = value;
+            break;
+        case CMD_SET_ROLL_RIGHT:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.roll = value;
+            break;
+        case CMD_SET_BODY_HEIGH_DOWN:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.bodyHeight = value;
+            break;
+        case CMD_SET_BODY_HEIGH_UP:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            high_cmd.bodyHeight = value;
+            break;
+        case CMD_SET_CLEAR_ALL:
+            high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
+            break;
+        default:
+            std::cout << "set mode invalid"<< std::endl;
+            return;
+        }
+        udp.SetSend(high_cmd);
 }
 
-void A1Wrapper::stop() {
-    UNITREE_LEGGED_SDK::HighCmd stop_cmd = {0};
-    stop_cmd.mode = 1;
-    udp.SetSend(stop_cmd);
-    sleep(10);
-}
-
-void A1Wrapper::setVel(float forward_speed) {
-    UNITREE_LEGGED_SDK::HighCmd foward_cmd = {0};
-    foward_cmd.forwardSpeed = forward_speed;
-    udp.SetSend(foward_cmd);
-    sleep(10);
-}
-
-void A1Wrapper::setWalkMode() {
-    UNITREE_LEGGED_SDK::HighCmd walk_mode = {0};
-    walk_mode.mode = 1;
-    udp.SetSend(walk_mode);
-    sleep(10);
+void A1Wrapper::getHighState()
+{
+    udp.GetRecv(state);
 }
