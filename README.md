@@ -24,6 +24,9 @@ The Unitree SDK define a "HighState" to present the high level control of the ro
 
 ### Comment:
 1.Setting sport mode is not supported through calling unitree sdk.
+
 2.In normal mode, the robot dog will drift when stepping, It's best to develop in sport mode.
+
 3.Getting temperature in sport mode is not supported.
+
 4.Getting the current mode of the robot dog is not supported.
