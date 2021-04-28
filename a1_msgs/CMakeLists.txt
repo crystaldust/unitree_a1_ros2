@@ -40,11 +40,12 @@ set(msg_files
 	"msg/IMU.msg"
 	"msg/Cartesian.msg"
 	"msg/Pose.msg"
+	"msg/MotorState.msg"
 	"srv/HighState.srv"
 	"srv/Imu.srv"
 	"srv/Mode.srv"
 	"srv/Cartesian.srv"
-	
+	"srv/LowState.srv"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
     ${msg_files}
