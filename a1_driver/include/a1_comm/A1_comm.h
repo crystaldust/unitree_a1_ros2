@@ -2,7 +2,7 @@
 #define A1_COMM__A1_COMM_H_
 
 enum StartupMode { STARTUP_BASIC_MODE = 0, STARTUP_SPORT_MODE };
-enum SetLevel {HIGH_LEVEL = 0X00, LOW_LEVEL = 0xff};
+enum SetLevel { HIGH_LEVEL = 0X00, LOW_LEVEL = 0xff };
 enum SetCmd {
   CMD_SET_MODE_STAND = 0,
   CMD_SET_MODE_FORCE_STAND,

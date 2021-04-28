@@ -12,8 +12,7 @@
 using std::cout;
 using std::endl;
 
-void print_help()
-{
+void print_help() {
   std::cout << "Usage:" << endl
             << std::left << std::setw(20) << "--node_name -n:"
             << "Name of the serving ROS node, 'a1_node' by default" << endl
@@ -23,11 +22,11 @@ void print_help()
             << "Level of A1 dog, high level(default) or low level" << endl
             << "Example:" << endl
             << "PATH_TO_CMD -m sports" << endl
-            << "PATH_TO_CMD --mode sports --node_name my_a1_node --l level" << endl;
+            << "PATH_TO_CMD --mode sports --node_name my_a1_node --l level"
+            << endl;
 }
 
-const char *get_arg(char *argv[])
-{
+const char *get_arg(char *argv[]) {
   if (optarg != nullptr) {
     return optarg;
   }
@@ -41,8 +40,7 @@ const char *get_arg(char *argv[])
 // works: ./cmd --mode sports
 // works: ./cmd --mode=sports
 bool parse_commandline(int argc, char *argv[], std::string &node_name,
-                       std::string &mode, std::string &level)
-{
+                       std::string &mode, std::string &level) {
   const char *short_options = "m::n::l";
   const option long_options[] = {{"mode", optional_argument, nullptr, 'm'},
                                  {"node_name", optional_argument, nullptr, 'n'},
@@ -66,12 +64,12 @@ bool parse_commandline(int argc, char *argv[], std::string &node_name,
         return false;
     }
   }
-  cout << "running node [" << node_name << "] in {" << mode << "} mode" << " {" << level << "} level" << endl;
+  cout << "running node [" << node_name << "] in {" << mode << "} mode"
+       << " {" << level << "} level" << endl;
   return true;
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   int level;
   std::string node_name = "a1_node";
   std::string arg_mode = "sports";
@@ -82,12 +80,12 @@ int main(int argc, char *argv[])
     return -1;
   }
   if (arg_level == "high") {
-      level = HIGH_LEVEL;
-  } else if (arg_level == "low"){
-      level = LOW_LEVEL;
+    level = HIGH_LEVEL;
+  } else if (arg_level == "low") {
+    level = LOW_LEVEL;
   } else {
-      print_help();
-      return -1;
+    print_help();
+    return -1;
   }
   if (arg_mode == "sports") {
     A1ROS a1_ros = A1ROS(node_name, STARTUP_SPORT_MODE, level);

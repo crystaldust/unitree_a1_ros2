@@ -13,8 +13,8 @@
 #include "a1_msgs/srv/cartesian.hpp"
 #include "a1_msgs/srv/high_state.hpp"
 #include "a1_msgs/srv/imu.hpp"
-#include "a1_msgs/srv/mode.hpp"
 #include "a1_msgs/srv/low_state.hpp"
+#include "a1_msgs/srv/mode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
 

@@ -6,8 +6,7 @@
 #include <time.h>
 
 void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed,
-                             float rotateSpeed)
-{
+                             float rotateSpeed) {
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
 
   if (forwardSpeed == 0 && sideSpeed == 0 && rotateSpeed == 0) {
@@ -24,8 +23,7 @@ void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed,
   udp.SetSend(high_cmd);
 }
 
-bool A1Wrapper::set_mode(uint8_t mode)
-{
+bool A1Wrapper::set_mode(uint8_t mode) {
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
   high_cmd.mode = mode;
   if (udp.SetSend(high_cmd) != 0) {
@@ -35,8 +33,7 @@ bool A1Wrapper::set_mode(uint8_t mode)
   return true;
 }
 
-void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight)
-{
+void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight) {
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
 
   high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
