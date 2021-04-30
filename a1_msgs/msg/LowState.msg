@@ -14,7 +14,7 @@ uint32 crc
 
 # Old version Aliengo does not have:
 Cartesian[4] eeForceRaw
-Cartesian[4] eeForce          #it's a 1-DOF force infact, but we use 3-DOF here just for visualization 
+Cartesian[4] eeForce          #it's a 1-DOF force infact, but we use 3-DOF here just for visualization
 Cartesian position            # will delete
 Cartesian velocity            # will delete
 Cartesian velocity_w            # will delete

@@ -34,18 +34,21 @@ endif()
 find_package(builtin_interfaces REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 set(msg_files
-    "msg/Mode.msg"
 	"msg/IMU.msg"
 	"msg/Cartesian.msg"
-    "msg/State.msg"
-	"srv/State.srv"
+	"msg/Pose.msg"
+	"msg/MotorState.msg"
+	"msg/LowCmd.msg"
+	"srv/HighState.srv"
+	"srv/LowState.srv"
+	"srv/Imu.srv"
+	"srv/Mode.srv"
+	"srv/Cartesian.srv"
 )
 rosidl_generate_interfaces(${PROJECT_NAME}
     ${msg_files}
-    DEPENDENCIES builtin_interfaces geometry_msgs std_msgs sensor_msgs
+    DEPENDENCIES builtin_interfaces geometry_msgs
 )
 
 ament_package()

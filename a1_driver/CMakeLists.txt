@@ -6,6 +6,11 @@ if (NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD 14)
 endif ()
 
+if(BUILD_TESTING)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+endif()
+
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
@@ -19,32 +24,38 @@ set(dependencies
         geometry_msgs
         )
 
+message(INFO $ENV{UNITREE_LEGGED_SDK_PATH})
+
 include_directories(
         include
         $ENV{UNITREE_LEGGED_SDK_PATH}/include
 )
 
 link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
-string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
+
+EXECUTE_PROCESS(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE CPU_ARCH)
+if ( "${CPU_ARCH}" STREQUAL "x86_64")
+	set(UNITREE_PLATFORM "amd64")
+elseif ( "${CPU_ARCH}" STREQUAL "aarch64")
+	set(UNITREE_PLATFORM "arm64")
+else()
+	set(UNITREE_PLATFORM "arm32")
+endif()
+string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_${UNITREE_PLATFORM}.so)
 set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
 add_executable(a1_main src/main.cpp
         src/A1_ros.cpp
-        include/a1_driver/A1_ros.h
         src/A1_wrapper.cpp
-        include/a1_driver/A1_wrapper.h)
+		)
 ament_target_dependencies(a1_main ${dependencies} a1_msgs)
 target_link_libraries(a1_main ${EXTRA_LIBS})
-
-add_executable(msg_pub examples/msg_pub.cpp)
-ament_target_dependencies(msg_pub ${dependencies} a1_msgs)
 
 ament_export_include_directories(include)
 ament_export_dependencies(${dependencies})
 
 install(TARGETS
         a1_main
-        msg_pub
         DESTINATION lib/${PROJECT_NAME}
         )
 
