@@ -24,13 +24,24 @@ set(dependencies
         geometry_msgs
         )
 
+message(INFO $ENV{UNITREE_LEGGED_SDK_PATH})
+
 include_directories(
         include
         $ENV{UNITREE_LEGGED_SDK_PATH}/include
 )
 
 link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
-string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
+
+EXECUTE_PROCESS(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE CPU_ARCH)
+if ( "${CPU_ARCH}" STREQUAL "x86_64")
+	set(UNITREE_PLATFORM "amd64")
+elseif ( "${CPU_ARCH}" STREQUAL "aarch64")
+	set(UNITREE_PLATFORM "arm64")
+else()
+	set(UNITREE_PLATFORM "arm32")
+endif()
+string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_${UNITREE_PLATFORM}.so)
 set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
 add_executable(a1_main src/main.cpp
