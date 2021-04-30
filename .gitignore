@@ -1,6 +1,6 @@
 build/*
 log/*
 install/*
-.idea/*
 transfer.sh
-*/.idea/*
+**/.idea
+**/cmake-build-debug/

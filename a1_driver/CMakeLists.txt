@@ -1,62 +1,51 @@
-cmake_minimum_required(VERSION 3.5) project(a1_driver)
+cmake_minimum_required(VERSION 3.5)
+project(a1_driver)
 
-#Default to C++ 14
-    if (NOT CMAKE_CXX_STANDARD) set(CMAKE_CXX_STANDARD 14) endif()
+# Default to C++14
+if (NOT CMAKE_CXX_STANDARD)
+    set(CMAKE_CXX_STANDARD 14)
+endif ()
 
-        if (BUILD_TESTING) find_package(
-            ament_lint_auto
-                REQUIRED) ament_lint_auto_find_test_dependencies() endif()
+if(BUILD_TESTING)
+    find_package(ament_lint_auto REQUIRED)
+    ament_lint_auto_find_test_dependencies()
+endif()
 
-            if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES
-                "Clang") add_compile_options(-Wall - Wextra - Wpedantic) endif()
-                add_definitions(-DSPORT_MODE) find_package(
-                    ament_cmake REQUIRED) find_package(geometry_msgs REQUIRED)
-                    find_package(rclcpp REQUIRED) find_package(
-                        a1_msgs REQUIRED) set(dependencies rclcpp geometry_msgs)
+if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif ()
+add_definitions(-DSPORT_MODE)
+find_package(ament_cmake REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(a1_msgs REQUIRED)
+set(dependencies
+        rclcpp
+        geometry_msgs
+        )
 
-                        message(INFO $ENV{UNITREE_LEGGED_SDK_PATH})
+include_directories(
+        include
+        $ENV{UNITREE_LEGGED_SDK_PATH}/include
+)
 
-                            include_directories(
-                                include $ENV{UNITREE_LEGGED_SDK_PATH} / include)
+link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
+string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
+set(EXTRA_LIBS ${LEGGED_SDK_NAME} lcm)
 
-                                link_directories($ENV{UNITREE_LEGGED_SDK_PATH} /
-                                                 lib)
+add_executable(a1_main src/main.cpp
+        src/A1_ros.cpp
+        src/A1_wrapper.cpp
+		)
+ament_target_dependencies(a1_main ${dependencies} a1_msgs)
+target_link_libraries(a1_main ${EXTRA_LIBS})
 
-                                    EXECUTE_PROCESS(
-                                        COMMAND uname - m COMMAND tr -
-                                        d '\n' OUTPUT_VARIABLE
-                                            CPU_ARCH) if ("${CPU_ARCH}" STREQUAL
-                                                          "x86_64") set(UNITREE_PLATFORM
-                                                                        "amd64")
-                                        elseif("${CPU_ARCH}" STREQUAL "aarch64") set(
-                                            UNITREE_PLATFORM
-                                            "arm64") else() set(UNITREE_PLATFORM
-                                                                "arm32") endif()
-                                            string(
-                                                CONCAT LEGGED_SDK_NAME
-                                                    libunitree_legged_sdk_${
-                                                        UNITREE_PLATFORM}
-                                                        .so) set(EXTRA_LIBS ${
-                                                LEGGED_SDK_NAME} lcm)
+ament_export_include_directories(include)
+ament_export_dependencies(${dependencies})
 
-                                                add_executable(
-                                                    a1_main src / main.cpp src /
-                                                    A1_ros.cpp src /
-                                                    A1_wrapper
-                                                        .cpp) ament_target_dependencies(a1_main ${
-                                                    dependencies} a1_msgs)
-                                                    target_link_libraries(
-                                                        a1_main ${EXTRA_LIBS})
+install(TARGETS
+        a1_main
+        DESTINATION lib/${PROJECT_NAME}
+        )
 
-                                                        ament_export_include_directories(
-                                                            include)
-                                                            ament_export_dependencies(
-                                                                ${dependencies})
-
-                                                                install(
-                                                                    TARGETS a1_main
-                                                                        DESTINATION
-                                                                            lib /
-                                                                    ${PROJECT_NAME})
-
-                                                                    ament_package()
+ament_package()
