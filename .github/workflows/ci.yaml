@@ -1,32 +1,29 @@
-name: MSBuild
+name: ci
 
-on: [push]
-
-env:
-  # Path to the solution file relative to the root of the project.
-  SOLUTION_FILE_PATH: .
-
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: Release
+on: [push, pull_request]
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  ci:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            distro: foxy
+    env:
+      UNITREE_LEGGED_SDK_PATH: /tmp/unitree_legged_sdk
+      UNITREE_PLATFORM: "amd64"
     steps:
-    - uses: actions/checkout@v2
+      - name: prepare unitree SDK
+        run: |
+          git clone https://github.com/unitreerobotics/unitree_legged_sdk $UNITREE_LEGGED_SDK_PATH
+          cp -r $UNITREE_LEGGED_SDK_PATH/include/* /usr/local/include/
+          cp -r $UNITREE_LEGGED_SDK_PATH/lib/* /usr/local/lib/
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Restore NuGet packages
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
-
-    - name: Build
-      working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      - uses: actions/checkout@v1
+      - uses: 'ros-industrial/industrial_ci@master'
+        #env: {ROS_DISTRO: "${{ matrix.distro }}" }
+        env:
+          ROS_DISTRO: "${{ matrix.distro }}"
+          UNITREE_LEGGED_SDK_PATH: /tmp/unitree_legged_sdk
+          UNITREE_PLATFORM: "amd64"
