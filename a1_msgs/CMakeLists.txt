@@ -39,7 +39,6 @@ set(msg_files
 	"msg/Cartesian.msg"
 	"msg/Pose.msg"
 	"msg/MotorState.msg"
-	"msg/LowCmd.msg"
 	"srv/HighState.srv"
 	"srv/LowState.srv"
 	"srv/Imu.srv"
