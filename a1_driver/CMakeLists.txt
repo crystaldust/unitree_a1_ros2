@@ -6,7 +6,6 @@ find_package(ament_cmake REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(unitree_legged_sdk REQUIRED)
-find_package(lcm REQUIRED)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -39,6 +38,8 @@ ament_target_dependencies(a1_ros
   ${dependencies}
 )
 
+# ament_export_dependencies(lcm) triggers the equivalent of find_package(lcm) here, however
+# this doesn't seem to populate the expected CMake variables.
 target_link_libraries(a1_ros
     lcm
 )
