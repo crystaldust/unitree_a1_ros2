@@ -1,29 +1,20 @@
 name: ci
 
-on: [push, pull_request]
+on:
+  push:
 
 jobs:
   ci:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04
     strategy:
-      matrix:
-        include:
-          - os: ubuntu-20.04
-            distro: foxy
-    env:
-      UNITREE_LEGGED_SDK_PATH: /tmp/unitree_legged_sdk
-      UNITREE_PLATFORM: "amd64"
+      fail-fast: false
     steps:
-      - name: prepare unitree SDK
-        run: |
-          git clone https://github.com/unitreerobotics/unitree_legged_sdk $UNITREE_LEGGED_SDK_PATH
-          cp -r $UNITREE_LEGGED_SDK_PATH/include/* /usr/local/include/
-          cp -r $UNITREE_LEGGED_SDK_PATH/lib/* /usr/local/lib/
-
-      - uses: actions/checkout@v1
-      - uses: 'ros-industrial/industrial_ci@master'
-        #env: {ROS_DISTRO: "${{ matrix.distro }}" }
-        env:
-          ROS_DISTRO: "${{ matrix.distro }}"
-          UNITREE_LEGGED_SDK_PATH: /tmp/unitree_legged_sdk
-          UNITREE_PLATFORM: "amd64"
+      - uses: actions/checkout@v2
+      - uses: ros-tooling/setup-ros@v0.1
+      - uses: ros-tooling/action-ros-ci@v0.2
+        with:
+          package-name:
+            a1_msgs
+            a1_driver
+          target-ros2-distro: rolling
+          vcs-repo-file-url: unitree_a1_ros2.repos
