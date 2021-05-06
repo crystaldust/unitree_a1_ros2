@@ -1,0 +1,9 @@
+repositories:
+  unitree_legged_sdk:
+    type: git
+    url: https://github.com/huawei-ros/unitree_legged_sdk.git
+    version: master
+  lcm:
+    type: git
+    url: https://github.com/lcm-proj/lcm.git
+    version: master

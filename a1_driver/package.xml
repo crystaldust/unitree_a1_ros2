@@ -8,10 +8,14 @@
     <license>Apache License 2.0</license>
 
     <buildtool_depend>ament_cmake</buildtool_depend>
-    <build_depend>rclcpp</build_depend>
-    <build_depend>std_msgs</build_depend>
-    <build_depend>geometry_msgs</build_depend>
-    <build_depend>a1_msgs</build_depend>
+
+    <depend>rclcpp</depend>
+    <depend>std_msgs</depend>
+    <depend>geometry_msgs</depend>
+    <depend>a1_msgs</depend>
+    <depend>lcm</depend>
+    <depend>unitree_legged_sdk</depend>
+
     <test_depend>ament_lint_auto</test_depend>
     <test_depend>ament_lint_common</test_depend>
 
