@@ -1,0 +1,20 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  ci:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ros-tooling/setup-ros@v0.1
+      - uses: ros-tooling/action-ros-ci@v0.2
+        with:
+          package-name:
+            a1_msgs
+            a1_driver
+          target-ros2-distro: rolling
+          vcs-repo-file-url: unitree_a1_ros2.repos
