@@ -16,6 +16,8 @@
 #include "a1_msgs/srv/low_state.hpp"
 #include "a1_msgs/srv/mode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "a1_msgs/msg/mode.hpp"
+#include "a1_msgs/srv/state.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 class A1ROS {
