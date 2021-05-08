@@ -1,12 +1,23 @@
+// Copyright 2015 Open Source Robotics Foundation, Inc.
 //
-// Created by sun on 2021/3/1.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-#include "a1_driver/A1_wrapper.h"
+#include "a1_driver/A1_wrapper.hpp"
 #include <time.h>
 
-void A1Wrapper::set_velocity(float forwardSpeed, float sideSpeed,
-                             float rotateSpeed)
+void A1Wrapper::set_velocity(
+  float forwardSpeed, float sideSpeed,
+  float rotateSpeed)
 {
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
 
@@ -46,8 +57,8 @@ void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight)
   udp.SetSend(high_cmd);
 }
 
-void A1Wrapper::recv_imu_msg() { udp.GetRecv(state); }
+void A1Wrapper::recv_imu_msg() {udp.GetRecv(state);}
 
-void A1Wrapper::recv_cartesian_msg() { udp.GetRecv(state); }
+void A1Wrapper::recv_cartesian_msg() {udp.GetRecv(state);}
 
-void A1Wrapper::recv_high_state() { udp.GetRecv(state); }
+void A1Wrapper::recv_high_state() {udp.GetRecv(state);}
