@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+function ament_uncrustify_test()
+{
+	files=$1
+
+	for file in $files
+	do
+		num_uncrustified=$(ament_uncrustify $file 2>&1 | grep '[0-9]+* file.*with code style divergence' | wc -l)
+		if [ "$num_uncrustified" != "0" ]; then
+			echo -e "\033[31m$file need to be formatted, try reformatting and add it to stage before commiting:\033[0m"
+			echo -e "\033[31m\tament_uncrustify --reformat $file \033[0m"
+			uncrustify_result=0
+			return
+		fi
+	done
+
+	uncrustify_result=1
+}
+
+# ========= Main testing starts here =============
+echo "pre-commit hook starts working"
+
+num_h_files=$(find ./ | grep '\.h$' | wc -l)
+if [ "$num_h_files" != "0" ]; then
+	echo "There are some .h files, which should be renamed to .hpp files:"
+	find ./ | grep '\.h$'
+	exit 1
+fi
+
+uncrustify_result=-1
+
+echo "testing header files format with ament_uncrustify"
+hpp_files=$(git diff --staged --name-only | grep '\.hpp$')
+ament_uncrustify_test "${hpp_files[@]}"
+if [[ $uncrustify_result == 0 ]]; then
+	exit 1
+fi
+
+echo "testing source files format with ament_uncrustify"
+cpp_files=$(git diff --staged --name-only | grep '\.cpp$')
+ament_uncrustify_test "${cpp_files[@]}"
+if [[ $uncrustify_result == 0 ]]; then
+	exit 1
+fi
