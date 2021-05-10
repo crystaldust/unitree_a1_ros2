@@ -41,6 +41,9 @@ public:
   int node_init(int argc, char * argv[]);
   void get_high_state_msg(
     std::shared_ptr<a1_msgs::srv::HighState::Response> response);
+
+  void get_low_state_msg(
+    std::shared_ptr<a1_msgs::srv::LowState::Response> response);
   void get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response);
   void get_cartesian_msg(
     std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);

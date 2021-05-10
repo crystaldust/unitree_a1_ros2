@@ -56,7 +56,7 @@ bool parse_commandline(
   int argc, char * argv[], std::string & node_name,
   std::string & mode, std::string & level)
 {
-  const char * short_options = "m::n::";
+  const char * short_options = "m::n::l";
   const option long_options[] = {{"mode", optional_argument, nullptr, 'm'},
     {"node_name", optional_argument, nullptr, 'n'},
     {"level", optional_argument, nullptr, 'l'},
@@ -96,6 +96,7 @@ int main(int argc, char * argv[])
     print_help();
     return -1;
   }
+  int level;
   if (arg_level == "high") {
     level = HIGH_LEVEL;
   } else if (arg_level == "low") {

@@ -13,9 +13,9 @@ rosidl_generate_interfaces(
   "msg/Pose.msg"
   "srv/Cartesian.srv"
   "srv/HighState.srv"
+  "srv/LowState.srv"
   "srv/Imu.srv"
-  "srv/Mode.srv"
-  "srv/State.srv")
+  "srv/Mode.srv")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

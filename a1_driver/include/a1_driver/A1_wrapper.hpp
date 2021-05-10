@@ -59,11 +59,12 @@ public:
   void recv_cartesian_msg();
   UNITREE_LEGGED_SDK::UDP udp;
   UNITREE_LEGGED_SDK::Safety safety;
-  UNITREE_LEGGED_SDK::HighCmd cmd;
+  UNITREE_LEGGED_SDK::HighCmd highCmd;
+  UNITREE_LEGGED_SDK::LowCmd lowCmd;
+  UNITREE_LEGGED_SDK::LowState lowState;
   UNITREE_LEGGED_SDK::HighState highState;
-  UNITREE_LEGGED_SDK::HighState lowState;
   uint8_t r_mode;
-  int set_level;
+  int level;
 };
 
 #endif  // A1_DRIVER__A1_WRAPPER_HPP_
