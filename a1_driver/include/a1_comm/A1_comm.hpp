@@ -16,7 +16,7 @@
 #define A1_COMM__A1_COMM_HPP_
 
 enum StartupMode { STARTUP_BASIC_MODE = 0, STARTUP_SPORT_MODE };
-
+enum SetLevel { HIGH_LEVEL = 0X00, LOW_LEVEL = 0xff };
 enum SetCmd
 {
   CMD_SET_MODE_STAND = 0,
@@ -36,6 +36,7 @@ enum SetCmd
 // Service
 #define ROS2_SERVICE_SET_MODE "unitree_a1/set_mode"
 #define ROS2_SERVICE_GET_HIGH_STATE_MSG "unitree_a1/get_high_state"
+#define ROS2_SERVICE_GET_LOW_STATE_MSG "unitree_a1/get_low_state"
 #define ROS2_SERVICE_GET_IMU_MSG "unitree_a1/get_imu_msg"
 #define ROS2_SERVICE_GET_CARTESIAN_MSG "unitree_a1/get_cartesian_msg"
 #endif  // A1_COMM__A1_COMM_HPP_

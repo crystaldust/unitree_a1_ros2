@@ -31,9 +31,11 @@ void print_help()
     "Name of the serving ROS node, 'a1_node' by default" << endl <<
     std::left << std::setw(20) << "--mode -m:" <<
     "Mode of A1 dog, sports(default) or basic" << endl <<
+    std::left << std::setw(20) << "--level -l:" <<
+    "Level of A1 dog, high level(default) or low level" << endl <<
     "Example:" << endl <<
     "PATH_TO_CMD -m sports" << endl <<
-    "PATH_TO_CMD --mode sports --node_name my_a1_node" << endl;
+    "PATH_TO_CMD --mode sports --node_name my_a1_node --level high" << endl;
 }
 
 const char * get_arg(char * argv[])
@@ -52,11 +54,12 @@ const char * get_arg(char * argv[])
 // works: ./cmd --mode=sports
 bool parse_commandline(
   int argc, char * argv[], std::string & node_name,
-  std::string & mode)
+  std::string & mode, std::string & level)
 {
   const char * short_options = "m::n::";
   const option long_options[] = {{"mode", optional_argument, nullptr, 'm'},
     {"node_name", optional_argument, nullptr, 'n'},
+    {"level", optional_argument, nullptr, 'l'},
     {0, 0, 0, 0}};
 
   int opt;

@@ -168,7 +168,11 @@ int A1ROS::node_init(int argc, char * argv[])
     [this](const HighStateRequest request, HighStateResponse response) {
       get_high_state_msg(response);
     });
-
+  auto low_state_service = A1_node->create_service<a1_msgs::srv::LowState>(
+    ROS2_SERVICE_GET_LOW_STATE_MSG,
+    [this](const LowStateRequest request, LowStateResponse response) {
+        get_low_state_msg(response);
+    });
   auto imu_service = A1_node->create_service<a1_msgs::srv::Imu>(
     ROS2_SERVICE_GET_IMU_MSG,
     [this](const ImuRequest request, ImuResponse response) {
