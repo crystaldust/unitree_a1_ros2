@@ -31,11 +31,14 @@
 class A1ROS
 {
 public:
-  A1ROS(std::string node_name, int level) : wrapper(A1Wrapper(level)) {
+  A1ROS(std::string node_name, int level)
+  : wrapper(A1Wrapper(level))
+  {
     this->node_name = node_name;
   }
   A1ROS(std::string node_name, uint8_t sport_mode, int level)
-    : wrapper(A1Wrapper(sport_mode, level)) {
+  : wrapper(A1Wrapper(sport_mode, level))
+  {
     this->node_name = node_name;
   }
   int node_init(int argc, char * argv[]);

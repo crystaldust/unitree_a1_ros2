@@ -27,19 +27,21 @@ class A1Wrapper
 public:
   /*sport mode*/
   A1Wrapper(uint8_t sport_mode, int set_level)
-      : udp(8081, "192.168.123.161", 8082, SEND_LENGTH, RECV_LENGTH),
-        safety(UNITREE_LEGGED_SDK::LeggedType::A1) {
+  : udp(8081, "192.168.123.161", 8082, SEND_LENGTH, RECV_LENGTH),
+    safety(UNITREE_LEGGED_SDK::LeggedType::A1)
+  {
     r_mode = sport_mode;
     level = set_level;
     if (level == UNITREE_LEGGED_SDK::HIGHLEVEL) {
-        udp.InitCmdData(highCmd);
+      udp.InitCmdData(highCmd);
     } else {
-        udp.InitCmdData(lowCmd);
+      udp.InitCmdData(lowCmd);
     }
   }
   /*basic mode*/
   explicit A1Wrapper(int set_level)
-        : udp(set_level), safety(UNITREE_LEGGED_SDK::LeggedType::A1), r_mode(0) {
+  : udp(set_level), safety(UNITREE_LEGGED_SDK::LeggedType::A1), r_mode(0)
+  {
     level = set_level;
     if (level == UNITREE_LEGGED_SDK::HIGHLEVEL) {
       udp.InitCmdData(highCmd);

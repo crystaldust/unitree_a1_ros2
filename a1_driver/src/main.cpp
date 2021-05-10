@@ -81,8 +81,8 @@ bool parse_commandline(
         return false;
     }
   }
-  cout << "running node [" << node_name << "] in {" << mode << "} mode"
-       << " {" << level << "} level" << endl;
+  cout << "running node [" << node_name << "] in {" << mode << "} mode" <<
+    " {" << level << "} level" << endl;
   return true;
 }
 

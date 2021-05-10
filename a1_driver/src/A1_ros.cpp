@@ -14,7 +14,8 @@
 
 #include "a1_driver/A1_ros.hpp"
 
-void A1ROS::get_high_state_msg(HighStateResponse response) {
+void A1ROS::get_high_state_msg(HighStateResponse response)
+{
   wrapper.recv_high_state();
   response->levelflag = wrapper.highState.levelFlag;
   response->commversion = wrapper.highState.commVersion;
@@ -33,7 +34,7 @@ void A1ROS::get_high_state_msg(HighStateResponse response) {
     response->imu.accelerometer[i] = wrapper.highState.imu.accelerometer[i];
   }
   response->imu.temperature =
-      static_cast<int>(wrapper.highState.imu.temperature);
+    static_cast<int>(wrapper.highState.imu.temperature);
   response->forwardspeed = wrapper.highState.forwardSpeed;
   response->sidespeed = wrapper.highState.sideSpeed;
   response->rotatespeed = wrapper.highState.rotateSpeed;
@@ -60,7 +61,8 @@ void A1ROS::get_high_state_msg(HighStateResponse response) {
   response->crc = wrapper.highState.crc;
 }
 
-void A1ROS::get_low_state_msg(LowStateResponse response) {
+void A1ROS::get_low_state_msg(LowStateResponse response)
+{
   wrapper.recv_low_state();
   response->levelflag = wrapper.lowState.levelFlag;
   response->commversion = wrapper.lowState.commVersion;
@@ -78,7 +80,7 @@ void A1ROS::get_low_state_msg(LowStateResponse response) {
     response->imu.accelerometer[i] = wrapper.lowState.imu.accelerometer[i];
   }
   response->imu.temperature =
-      static_cast<int>(wrapper.lowState.imu.temperature);
+    static_cast<int>(wrapper.lowState.imu.temperature);
 
   for (int i = 0; i < UNITREE_A1_MOTOR_STATE_ELEMENT_NUMS; i++) {
     response->motorstate[i].mode = wrapper.lowState.motorState[i].mode;
@@ -90,11 +92,11 @@ void A1ROS::get_low_state_msg(LowStateResponse response) {
     response->motorstate[i].dq_raw = wrapper.lowState.motorState[i].dq_raw;
     response->motorstate[i].ddq_raw = wrapper.lowState.motorState[i].ddq_raw;
     response->motorstate[i].temperature =
-        wrapper.lowState.motorState[i].temperature;
+      wrapper.lowState.motorState[i].temperature;
     response->motorstate[i].reserve[0] =
-        wrapper.lowState.motorState[i].reserve[0];
+      wrapper.lowState.motorState[i].reserve[0];
     response->motorstate[i].reserve[1] =
-        wrapper.lowState.motorState[i].reserve[1];
+      wrapper.lowState.motorState[i].reserve[1];
   }
 
   for (int i = 0; i < UNITREE_A1_DOG_LEGS; i++) {
@@ -109,7 +111,8 @@ void A1ROS::get_low_state_msg(LowStateResponse response) {
   response->crc = wrapper.lowState.crc;
 }
 
-void A1ROS::get_imu_msg(ImuResponse response) {
+void A1ROS::get_imu_msg(ImuResponse response)
+{
   wrapper.recv_imu_msg();
   for (int i = 0; i < UNITREE_A1_IMU_QUATERNION; i++) {
     response->quaternion[i] = wrapper.highState.imu.quaternion[i];
@@ -124,7 +127,8 @@ void A1ROS::get_imu_msg(ImuResponse response) {
   response->temperature = static_cast<int>(wrapper.highState.imu.temperature);
 }
 
-void A1ROS::get_cartesian_msg(CartesianResponse response) {
+void A1ROS::get_cartesian_msg(CartesianResponse response)
+{
   wrapper.recv_cartesian_msg();
   for (int i = 0; i < UNITREE_A1_DOG_LEGS; i++) {
     response->footposition2body[i].x = wrapper.highState.footPosition2Body[i].x;
@@ -171,7 +175,7 @@ int A1ROS::node_init(int argc, char * argv[])
   auto low_state_service = A1_node->create_service<a1_msgs::srv::LowState>(
     ROS2_SERVICE_GET_LOW_STATE_MSG,
     [this](const LowStateRequest request, LowStateResponse response) {
-        get_low_state_msg(response);
+      get_low_state_msg(response);
     });
   auto imu_service = A1_node->create_service<a1_msgs::srv::Imu>(
     ROS2_SERVICE_GET_IMU_MSG,

@@ -35,7 +35,8 @@ void A1Wrapper::set_velocity(
   udp.SetSend(high_cmd);
 }
 
-bool A1Wrapper::set_mode(uint8_t mode) {
+bool A1Wrapper::set_mode(uint8_t mode)
+{
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
   high_cmd.mode = mode;
   if (udp.SetSend(high_cmd) != 0) {
@@ -45,7 +46,8 @@ bool A1Wrapper::set_mode(uint8_t mode) {
   return true;
 }
 
-void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight) {
+void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight)
+{
   UNITREE_LEGGED_SDK::HighCmd high_cmd{};
 
   high_cmd.mode = CMD_SET_MODE_FORCE_STAND;
@@ -62,4 +64,4 @@ void A1Wrapper::recv_cartesian_msg() {udp.GetRecv(highState);}
 
 void A1Wrapper::recv_high_state() {udp.GetRecv(highState);}
 
-void A1Wrapper::recv_low_state() { udp.GetRecv(lowState); }
+void A1Wrapper::recv_low_state() {udp.GetRecv(lowState);}
