@@ -5,7 +5,8 @@ find_package(ament_cmake REQUIRED)
 
 find_package(rosidl_default_generators REQUIRED)
 
-rosidl_generate_interfaces(${PROJECT_NAME}
+rosidl_generate_interfaces(
+  ${PROJECT_NAME}
   "msg/Cartesian.msg"
   "msg/IMU.msg"
   "msg/Mode.msg"
@@ -14,8 +15,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/HighState.srv"
   "srv/Imu.srv"
   "srv/Mode.srv"
-  "srv/State.srv"
-)
+  "srv/State.srv")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

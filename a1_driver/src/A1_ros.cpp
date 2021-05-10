@@ -1,8 +1,18 @@
+// Copyright 2015 Open Source Robotics Foundation, Inc.
 //
-// Created by sun on 2021/3/1.
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
 //
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
-#include "a1_driver/A1_ros.h"
+#include "a1_driver/A1_ros.hpp"
 
 void A1ROS::get_high_state_msg(HighStateResponse response) {
   wrapper.recv_high_state();
@@ -126,57 +136,55 @@ void A1ROS::get_cartesian_msg(CartesianResponse response) {
   }
 }
 
-int A1ROS::node_init(int argc, char *argv[]) {
+int A1ROS::node_init(int argc, char * argv[])
+{
   rclcpp::init(argc, argv);
 
   auto A1_node = rclcpp::Node::make_shared(this->node_name);
   auto vel_sub = A1_node->create_subscription<geometry_msgs::msg::Twist>(
-      ROS2_TOPIC_SET_VELOCITY, 10,
-      [this](geometry_msgs::msg::Twist::UniquePtr msg) {
-        RCLCPP_INFO(rclcpp::get_logger("rcv_vel"),
-                    "forwardSpeed[%0.2f],sideSpeed[%0.2f],rotateSpeed[%0.2f]",
-                    msg->linear.x, msg->linear.y, msg->angular.z);
-        wrapper.set_velocity(msg->linear.x, msg->linear.y, msg->angular.z);
-      });
+    ROS2_TOPIC_SET_VELOCITY, 10,
+    [this](geometry_msgs::msg::Twist::UniquePtr msg) {
+      RCLCPP_INFO(
+        rclcpp::get_logger("rcv_vel"),
+        "forwardSpeed[%0.2f],sideSpeed[%0.2f],rotateSpeed[%0.2f]",
+        msg->linear.x, msg->linear.y, msg->angular.z);
+      wrapper.set_velocity(msg->linear.x, msg->linear.y, msg->angular.z);
+    });
   auto pose_sub = A1_node->create_subscription<a1_msgs::msg::Pose>(
-      ROS2_TOPIC_SET_POSE, 10, [this](a1_msgs::msg::Pose::UniquePtr msg) {
-        RCLCPP_INFO(rclcpp::get_logger("rcv_pose"),
-                    "yaw[%0.2f], pitch[%0.2f], roll[%0.2f], bodyHeight[%0.2f]",
-                    msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
-        wrapper.set_pose(msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
-      });
+    ROS2_TOPIC_SET_POSE, 10, [this](a1_msgs::msg::Pose::UniquePtr msg) {
+      RCLCPP_INFO(
+        rclcpp::get_logger("rcv_pose"),
+        "yaw[%0.2f], pitch[%0.2f], roll[%0.2f], bodyHeight[%0.2f]",
+        msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
+      wrapper.set_pose(msg->yaw, msg->pitch, msg->roll, msg->bodyheight);
+    });
   auto mode_service = A1_node->create_service<a1_msgs::srv::Mode>(
-      ROS2_SERVICE_SET_MODE,
-      [this](const ModeRequest request, ModeResponse response) {
-        response->value = wrapper.set_mode(request->mode);
-      });
+    ROS2_SERVICE_SET_MODE,
+    [this](const ModeRequest request, ModeResponse response) {
+      response->value = wrapper.set_mode(request->mode);
+    });
   auto hgih_state_service = A1_node->create_service<a1_msgs::srv::HighState>(
-      ROS2_SERVICE_GET_HIGH_STATE_MSG,
-      [this](const HighStateRequest request, HighStateResponse response) {
-        get_high_state_msg(response);
-      });
+    ROS2_SERVICE_GET_HIGH_STATE_MSG,
+    [this](const HighStateRequest request, HighStateResponse response) {
+      get_high_state_msg(response);
+    });
 
   auto imu_service = A1_node->create_service<a1_msgs::srv::Imu>(
-      ROS2_SERVICE_GET_IMU_MSG,
-      [this](const ImuRequest request, ImuResponse response) {
-        get_imu_msg(response);
-      });
+    ROS2_SERVICE_GET_IMU_MSG,
+    [this](const ImuRequest request, ImuResponse response) {
+      get_imu_msg(response);
+    });
   auto cartesian_service = A1_node->create_service<a1_msgs::srv::Cartesian>(
-      ROS2_SERVICE_GET_CARTESIAN_MSG,
-      [this](const CartesianRequest request, CartesianResponse response) {
-        get_cartesian_msg(response);
-      });
-  auto lowState_service = A1_node->create_service<a1_msgs::srv::LowState>(
-      ROS2_SERVICE_GET_LOW_STATE_MSG,
-      [this](const LowStateRequest request, LowStateResponse response) {
-        get_low_state_msg(response);
-      });
+    ROS2_SERVICE_GET_CARTESIAN_MSG,
+    [this](const CartesianRequest request, CartesianResponse response) {
+      get_cartesian_msg(response);
+    });
   UNITREE_LEGGED_SDK::InitEnvironment();
   float dt = 0.002f;
   UNITREE_LEGGED_SDK::LoopFunc loop_udpRecv(
-      "udp_recv", dt, 3, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
+    "udp_recv", dt, 3, boost::bind(&A1Wrapper::UDPRecv, &wrapper));
   UNITREE_LEGGED_SDK::LoopFunc loop_udpSend(
-      "udp_send", dt, 3, boost::bind(&A1Wrapper::UDPSend, &wrapper));
+    "udp_send", dt, 3, boost::bind(&A1Wrapper::UDPSend, &wrapper));
   loop_udpRecv.start();
   loop_udpSend.start();
   rclcpp::spin(A1_node);
