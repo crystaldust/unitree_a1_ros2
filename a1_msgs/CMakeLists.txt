@@ -9,13 +9,13 @@ rosidl_generate_interfaces(
   ${PROJECT_NAME}
   "msg/Cartesian.msg"
   "msg/IMU.msg"
-  "msg/Mode.msg"
+  "msg/MotorState.msg"
   "msg/Pose.msg"
   "srv/Cartesian.srv"
   "srv/HighState.srv"
   "srv/Imu.srv"
   "srv/Mode.srv"
-  "srv/State.srv")
+  "srv/LowState.srv")
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

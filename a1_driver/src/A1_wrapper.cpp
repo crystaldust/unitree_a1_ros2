@@ -42,6 +42,7 @@ bool A1Wrapper::set_mode(uint8_t mode)
   if (udp.SetSend(high_cmd) != 0) {
     return false;
   }
+
   return true;
 }
 
@@ -57,8 +58,10 @@ void A1Wrapper::set_pose(float yaw, float pitch, float roll, float bodyHeight)
   udp.SetSend(high_cmd);
 }
 
-void A1Wrapper::recv_imu_msg() {udp.GetRecv(state);}
+void A1Wrapper::recv_imu_msg() {udp.GetRecv(highState);}
 
-void A1Wrapper::recv_cartesian_msg() {udp.GetRecv(state);}
+void A1Wrapper::recv_cartesian_msg() {udp.GetRecv(highState);}
 
-void A1Wrapper::recv_high_state() {udp.GetRecv(state);}
+void A1Wrapper::recv_high_state() {udp.GetRecv(highState);}
+
+void A1Wrapper::recv_low_state() {udp.GetRecv(lowState);}

@@ -26,21 +26,28 @@ class A1Wrapper
 {
 public:
   /*sport mode*/
-  explicit A1Wrapper(uint8_t sport_mode)
+  A1Wrapper(uint8_t sport_mode, int level)
   : udp(8081, "192.168.123.161", 8082, SEND_LENGTH, RECV_LENGTH),
     safety(UNITREE_LEGGED_SDK::LeggedType::A1)
   {
-    memset(&cmd, 0, sizeof(cmd));
-    r_mode = sport_mode;
-    udp.InitCmdData(cmd);
+    run_mode = sport_mode;
+    this->level = level;
+    if (level == UNITREE_LEGGED_SDK::HIGHLEVEL) {
+      udp.InitCmdData(highCmd);
+    } else {
+      udp.InitCmdData(lowCmd);
+    }
   }
   /*basic mode*/
-  A1Wrapper()
-  : udp(UNITREE_LEGGED_SDK::HIGHLEVEL),
-    safety(UNITREE_LEGGED_SDK::LeggedType::A1),
-    r_mode(0)
+  explicit A1Wrapper(int level)
+  : udp(level), safety(UNITREE_LEGGED_SDK::LeggedType::A1), run_mode(0)
   {
-    udp.InitCmdData(cmd);
+    this->level = level;
+    if (level == UNITREE_LEGGED_SDK::HIGHLEVEL) {
+      udp.InitCmdData(highCmd);
+    } else {
+      udp.InitCmdData(lowCmd);
+    }
   }
   void UDPRecv() {udp.Recv();}
 
@@ -49,13 +56,18 @@ public:
   void set_pose(float yaw, float pitch, float roll, float bodyHeight);
   bool set_mode(uint8_t mode);
   void recv_high_state();
+  void recv_low_state();
   void recv_imu_msg();
   void recv_cartesian_msg();
+
   UNITREE_LEGGED_SDK::UDP udp;
   UNITREE_LEGGED_SDK::Safety safety;
-  UNITREE_LEGGED_SDK::HighCmd cmd;
-  UNITREE_LEGGED_SDK::HighState state;
-  uint8_t r_mode;
+  UNITREE_LEGGED_SDK::HighCmd highCmd {};
+  UNITREE_LEGGED_SDK::LowCmd lowCmd {};
+  UNITREE_LEGGED_SDK::LowState lowState;
+  UNITREE_LEGGED_SDK::HighState highState;
+  uint8_t run_mode;
+  int level;
 };
 
 #endif  // A1_DRIVER__A1_WRAPPER_HPP_

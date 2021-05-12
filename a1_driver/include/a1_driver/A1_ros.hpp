@@ -23,28 +23,30 @@
 #include "a1_msgs/srv/cartesian.hpp"
 #include "a1_msgs/srv/high_state.hpp"
 #include "a1_msgs/srv/imu.hpp"
+#include "a1_msgs/srv/low_state.hpp"
 #include "a1_msgs/srv/mode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
-#include "a1_msgs/msg/mode.hpp"
-#include "a1_msgs/srv/state.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 class A1ROS
 {
 public:
-  explicit A1ROS(std::string node_name)
-  : wrapper(A1Wrapper())
+  A1ROS(std::string node_name, int level)
+  : wrapper(A1Wrapper(level))
   {
     this->node_name = node_name;
   }
-  A1ROS(std::string node_name, uint8_t sport_mode)
-  : wrapper(A1Wrapper(sport_mode))
+  A1ROS(std::string node_name, uint8_t sport_mode, int level)
+  : wrapper(A1Wrapper(sport_mode, level))
   {
     this->node_name = node_name;
   }
   int node_init(int argc, char * argv[]);
   void get_high_state_msg(
     std::shared_ptr<a1_msgs::srv::HighState::Response> response);
+
+  void get_low_state_msg(
+    std::shared_ptr<a1_msgs::srv::LowState::Response> response);
   void get_imu_msg(std::shared_ptr<a1_msgs::srv::Imu::Response> response);
   void get_cartesian_msg(
     std::shared_ptr<a1_msgs::srv::Cartesian::Response> response);
@@ -56,6 +58,8 @@ private:
   using ModeResponse = std::shared_ptr<a1_msgs::srv::Mode::Response>;
   using HighStateRequest = std::shared_ptr<a1_msgs::srv::HighState::Request>;
   using HighStateResponse = std::shared_ptr<a1_msgs::srv::HighState::Response>;
+  using LowStateRequest = std::shared_ptr<a1_msgs::srv::LowState::Request>;
+  using LowStateResponse = std::shared_ptr<a1_msgs::srv::LowState::Response>;
   using ImuRequest = std::shared_ptr<a1_msgs::srv::Imu::Request>;
   using ImuResponse = std::shared_ptr<a1_msgs::srv::Imu::Response>;
   using CartesianRequest = std::shared_ptr<a1_msgs::srv::Cartesian::Request>;
